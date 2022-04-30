@@ -10,9 +10,6 @@ vim.wo.relativenumber = true
 vim.o.scrolloff = 3
 vim.o.sidescrolloff = 3
 
--- 高亮所在行
-vim.wo.cursorline = true
-
 -- 缩进 4 个空格等于一个Tab
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
@@ -75,4 +72,4 @@ vim.o.showtabline = 2
 vim.o.showmode = false
 
 -- 配置剪切板
-vim.opt.clipboard = "unnamedplus"
+vim.o.clipboard = "unnamedplus"
