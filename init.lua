@@ -1,5 +1,7 @@
 require "basic"
+require "keymaps"
 require "plugins"
+
 
 require "plugins-config"
 require "plugins-config.bufferline"
