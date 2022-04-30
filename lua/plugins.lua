@@ -6,6 +6,17 @@ return require('packer').startup(function()
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
+    use 'mhinz/vim-startify'
+    use "lukas-reineke/indent-blankline.nvim"
+    use "yamatsum/nvim-cursorline"
+
+    -- using bufferline.nvim
+    use {
+        'akinsho/bufferline.nvim',
+        tag = "*",
+        requires = 'kyazdani42/nvim-web-devicons'
+    }
+
     use {
         'kyazdani42/nvim-tree.lua',
         requires = {
@@ -13,17 +24,24 @@ return require('packer').startup(function()
         }
     }
 
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
+
     -- Collection of configurations for the built-in LSP client
     use 'neovim/nvim-lspconfig'
 
-    use 'mhinz/vim-startify'
-
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { { 'nvim-lua/plenary.nvim' } }
+        requires = {
+            { 'nvim-lua/plenary.nvim' }
+        }
     }
 
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use { 'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'make'
+    }
 
     -- Treesittetr
     use {
@@ -31,24 +49,14 @@ return require('packer').startup(function()
         run = ":TSUpdate",
     }
 
-    use {
-        "hrsh7th/nvim-cmp",
-        -- commit = "4f1358e659d51c69055ac935e618b684cf4f1429",
-    } -- The completion plugin
+    use "hrsh7th/nvim-cmp" -- The completion plugin
+    use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-buffer" -- buffer completions
     use "hrsh7th/cmp-path" -- path completions
     use "hrsh7th/cmp-cmdline" -- cmdline completions
-    use "hrsh7th/cmp-nvim-lsp"
-    use "hrsh7th/cmp-nvim-lua"
-    use "f3fora/cmp-spell" -- spell check
+    -- For luasnip users
+    use "L3MON4D3/LuaSnip"
+    use "saadparwaiz1/cmp_luasnip"
 
-    -- using bufferline.nvim
-    use { 'akinsho/bufferline.nvim', tag = "*", requires = 'kyazdani42/nvim-web-devicons' }
-
-    use "lukas-reineke/indent-blankline.nvim"
-
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-    }
+    use { "akinsho/toggleterm.nvim" }
 end)
