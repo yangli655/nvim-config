@@ -10,9 +10,12 @@ vim.wo.relativenumber = true
 vim.o.scrolloff = 3
 vim.o.sidescrolloff = 3
 
--- 缩进 4 个空格等于一个Tab
+-- 使用 Tab 键显示的空格数
 vim.o.tabstop = 4
+-- 缩进 4 个空格等于一个Tab
 vim.o.softtabstop = 4
+-- 缩进的字符数量
+vim.o.shiftwidth = 4
 vim.o.shiftround = true
 
 -- 空格替代tab
@@ -66,10 +69,11 @@ vim.o.wildmenu = true
 vim.o.pumheight = 10
 
 -- 永远显示 tabline
-vim.o.showtabline = 2
+vim.o.showtabline = 1
 
 -- 使用增强状态栏插件后不再需要 vim 的模式提示
 vim.o.showmode = false
 
 -- 配置剪切板
 vim.o.clipboard = "unnamedplus"
+

@@ -39,7 +39,8 @@ return require('packer').startup(function()
         }
     }
 
-    use { 'nvim-telescope/telescope-fzf-native.nvim',
+    use {
+        'nvim-telescope/telescope-fzf-native.nvim',
         run = 'make'
     }
 
@@ -59,4 +60,6 @@ return require('packer').startup(function()
     use "saadparwaiz1/cmp_luasnip"
 
     use { "akinsho/toggleterm.nvim"}
+    -- If you are using Packer
+    use 'marko-cerovac/material.nvim'
 end)
