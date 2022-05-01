@@ -20,7 +20,7 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 -- better buffer op --
 keymap("n", "bn", ":bnext<cr>", opts)
 keymap("n", "bp", ":bprev<cr>", opts)
-keymap("n", "bd", ":bdetele<cr>", opts)
+keymap("n", "bd", ":bdelete<cr>", opts)
 
 -- better tab op --
 keymap("n", "tn", ":tabnew<cr>", opts)

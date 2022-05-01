@@ -62,4 +62,8 @@ return require('packer').startup(function()
     use { "akinsho/toggleterm.nvim"}
     -- If you are using Packer
     use 'marko-cerovac/material.nvim'
+
+    use "terrortylor/nvim-comment"
+
+    use "windwp/nvim-autopairs"
 end)

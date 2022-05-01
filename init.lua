@@ -2,7 +2,6 @@ require "basic"
 require "keymaps"
 require "plugins"
 
-
 require "plugins-config"
 require "plugins-config.bufferline"
 require "plugins-config.lualine"
@@ -15,3 +14,5 @@ require "plugins-config.cmp"
 require "plugins-config.nvim-cursorline"
 require "plugins-config.toggleterm"
 require "plugins-config.material"
+require "plugins-config.nvim-comment"
+require "plugins-config.nvim-autopairs"
