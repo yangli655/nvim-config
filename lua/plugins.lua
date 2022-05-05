@@ -7,7 +7,14 @@ return require('packer').startup({
         -- Packer can manage itself
         use 'wbthomason/packer.nvim'
 
-        use 'mhinz/vim-startify'
+        use {
+            'goolord/alpha-nvim',
+            requires = { 'kyazdani42/nvim-web-devicons' },
+            config = function ()
+                require'alpha'.setup(require'alpha.themes.startify'.config)
+            end
+        }
+
         use "lukas-reineke/indent-blankline.nvim"
         use "yamatsum/nvim-cursorline"
 
@@ -19,16 +26,19 @@ return require('packer').startup({
         }
 
         use {
+            'nvim-lualine/lualine.nvim',
+            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+        }
+
+        use {
             'kyazdani42/nvim-tree.lua',
             requires = {
                 'kyazdani42/nvim-web-devicons', -- optional, for file icon
             }
         }
 
-        use {
-            'nvim-lualine/lualine.nvim',
-            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-        }
+        -- If you are using Packer
+        use 'marko-cerovac/material.nvim'
 
         -- Collection of configurations for the built-in LSP client
         use 'neovim/nvim-lspconfig'
@@ -61,8 +71,6 @@ return require('packer').startup({
         use "saadparwaiz1/cmp_luasnip"
 
         use { "akinsho/toggleterm.nvim"}
-        -- If you are using Packer
-        use 'marko-cerovac/material.nvim'
 
         use "terrortylor/nvim-comment"
 
