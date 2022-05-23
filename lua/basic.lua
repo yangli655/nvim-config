@@ -77,3 +77,6 @@ vim.o.showmode = false
 -- 配置剪切板
 vim.o.clipboard = "unnamedplus"
 
+-- 屏蔽 ruby perl healthcheck 报错
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
