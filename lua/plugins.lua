@@ -41,11 +41,8 @@ return require('packer').startup({
             tag = 'nightly',
         }
 
-        -- If you are using Packer
-        use 'marko-cerovac/material.nvim'
-
-        -- Collection of configurations for the built-in LSP client
-        use 'neovim/nvim-lspconfig'
+        -- Install without configuration
+        use 'navarasu/onedark.nvim'
 
         use {
             'nvim-telescope/telescope.nvim',
@@ -66,6 +63,8 @@ return require('packer').startup({
             run = ":TSUpdate",
         }
 
+        -- Collection of configurations for the built-in LSP client
+        use 'neovim/nvim-lspconfig'
         use "hrsh7th/nvim-cmp" -- The completion plugin
         use "hrsh7th/cmp-nvim-lsp"
         use "hrsh7th/cmp-buffer" -- buffer completions
@@ -75,7 +74,10 @@ return require('packer').startup({
         use "L3MON4D3/LuaSnip"
         use "saadparwaiz1/cmp_luasnip"
 
-        use { "akinsho/toggleterm.nvim" }
+        use {
+            "akinsho/toggleterm.nvim",
+            tag = '*'
+        }
 
         use "terrortylor/nvim-comment"
 

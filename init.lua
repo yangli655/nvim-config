@@ -14,7 +14,7 @@ if (not vim.g.vscode) then
     require "plugins-config.cmp"
     require "plugins-config.nvim-cursorline"
     require "plugins-config.toggleterm"
-    require "plugins-config.material"
+    require "plugins-config.onedark"
     require "plugins-config.nvim-comment"
     require "plugins-config.nvim-autopairs"
 end
