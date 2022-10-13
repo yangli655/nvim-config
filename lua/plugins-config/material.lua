@@ -1,9 +1,10 @@
+vim.cmd 'colorscheme material'
+vim.g.material_style = 'lighter'
+
 require('material').setup({
     contrast = {
         sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
         floating_windows = true, -- Enable contrast for floating windows
-        line_numbers = false, -- Enable contrast background for line numbers
-        sign_column = false, -- Enable contrast background for the sign column
         cursor_line = false, -- Enable darker background for the cursor line
         non_current_windows = false, -- Enable darker background for non-current windows
         popup_menu = false, -- Enable lighter background for the popup menu
@@ -29,6 +30,7 @@ require('material').setup({
     },
 
     disable = {
+        colored_cursor = false, -- Disable the colored cursor
         borders = false, -- Disable borders between verticaly split windows
         background = false, -- Prevent the theme from setting the background (NeoVim then uses your teminal background)
         term_colors = false, -- Prevent the theme from setting terminal colors
@@ -41,5 +43,3 @@ require('material').setup({
 
     custom_highlights = {} -- Overwrite highlights with your own
 })
-
-vim.cmd 'colorscheme material'

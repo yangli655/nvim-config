@@ -1,4 +1,4 @@
-if(not vim.g.vscode) then
+if (not vim.g.vscode) then
     require "basic"
     require "keymaps"
     require "plugins"

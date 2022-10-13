@@ -1,6 +1,6 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
-local use = require('packer').use
+vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup({
     function()
@@ -10,8 +10,8 @@ return require('packer').startup({
         use {
             'goolord/alpha-nvim',
             requires = { 'kyazdani42/nvim-web-devicons' },
-            config = function ()
-                require'alpha'.setup(require'alpha.themes.startify'.config)
+            config = function()
+                require 'alpha'.setup(require 'alpha.themes.startify'.config)
             end
         }
 
@@ -21,20 +21,24 @@ return require('packer').startup({
         -- using bufferline.nvim
         use {
             'akinsho/bufferline.nvim',
-            tag = "*",
+            tag = "v2.*",
             requires = 'kyazdani42/nvim-web-devicons'
         }
 
         use {
             'nvim-lualine/lualine.nvim',
-            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+            requires = {
+                'kyazdani42/nvim-web-devicons',
+                opt = true
+            }
         }
 
         use {
             'kyazdani42/nvim-tree.lua',
             requires = {
                 'kyazdani42/nvim-web-devicons', -- optional, for file icon
-            }
+            },
+            tag = 'nightly',
         }
 
         -- If you are using Packer
@@ -45,6 +49,7 @@ return require('packer').startup({
 
         use {
             'nvim-telescope/telescope.nvim',
+            tag = '0.1.0',
             requires = {
                 { 'nvim-lua/plenary.nvim' }
             }
@@ -70,7 +75,7 @@ return require('packer').startup({
         use "L3MON4D3/LuaSnip"
         use "saadparwaiz1/cmp_luasnip"
 
-        use { "akinsho/toggleterm.nvim"}
+        use { "akinsho/toggleterm.nvim" }
 
         use "terrortylor/nvim-comment"
 
