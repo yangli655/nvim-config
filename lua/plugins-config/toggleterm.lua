@@ -28,13 +28,19 @@ require("toggleterm").setup {
         -- see :h nvim_win_open for details on borders however
         -- the 'curved' border is a custom border type
         -- not natively supported but implemented in this plugin.
-        border = "curved",
+        border = "single",
         width = function(term)
-            return vim.o.columns * 0.8
+            return 120;
         end,
-        height = 40,
+        height = 30,
         winblend = 3,
-    }
+    },
+    winbar = {
+        enabled = false,
+        name_formatter = function(term) --  term: Terminal
+            return term.name
+        end
+    },
 }
 
 function _G.set_terminal_keymaps()
