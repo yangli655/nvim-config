@@ -65,6 +65,12 @@ return require('packer').startup({
 
         -- Collection of configurations for the built-in LSP client
         use 'neovim/nvim-lspconfig'
+
+        use({
+            "glepnir/lspsaga.nvim",
+            branch = "main",
+        })
+
         use "hrsh7th/nvim-cmp" -- The completion plugin
         use "hrsh7th/cmp-nvim-lsp"
         use "hrsh7th/cmp-buffer" -- buffer completions
