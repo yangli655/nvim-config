@@ -8,13 +8,13 @@ set ruler "显示标尺
 
 " 启用自动对齐功能，把上一行的对齐格式应用到下一行
 set autoindent
-" 依据上面的格式，智能的选择对齐方式，对于类似C语言编写很有用处
+" 依据上面的格式, 智能选择对齐方式
 set smartindent
 
 "wrap
 set wrap "自动换行
 set linebreak "不会在单词内部折行
-set scrolloff=3 "滚屏时，光标所处顶部/底部的距离 3为3行
+set scrolloff=3 "滚屏时, 光标所处顶部/底部的距离 3为3行
 
 "About search
 set hlsearch "高亮显示搜索的结果
@@ -62,12 +62,13 @@ let g:netrw_winsize = 25
 nnoremap <leader>e :Vex<CR>
 
 " 设置netrw
-let g:netrw_banner = 1       "设置是否显示横幅
-let g:netrw_liststyle = 3    "设置目录列表样式树形
-let g:netrw_browse_split = 4 "在之前的窗口编辑文件
-let g:netrw_altv = 1         "水平分割时，文件浏览器始终显示在左边
-let g:netrw_winsize = 25     "设置文件浏览器窗口宽度为25%
-nnoremap <leader>e :Lexplore<CR>    " 打开或关闭目录树
+let g:netrw_banner = 1              "设置是否显示横幅
+let g:netrw_liststyle = 3           "设置目录列表样式树形
+let g:netrw_browse_split = 4        "在之前的窗口编辑文件
+let g:netrw_altv = 1                "水平分割时, 文件浏览器始终显示在左边
+let g:netrw_winsize = 25            "设置文件浏览器窗口宽度为25%
+let g:netrw_list_hide = '^\..*'     "不显示隐藏文件, a 可取消
+nnoremap <leader>e :Lexplore<CR>    "打开或关闭目录树
 
 imap jk <ESC>
 nnoremap tn  :tabnew<CR>
@@ -82,5 +83,5 @@ nnoremap bd :bdelete<CR>
 " 状态行显示的内容
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 
-" 启动显示状态行1，总是显示状态行2
+" 启动显示状态行1, 总是显示状态行2
 set laststatus=2
