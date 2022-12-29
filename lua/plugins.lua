@@ -15,13 +15,22 @@ return require('packer').startup({
             end
         }
 
+        use({
+            'projekt0n/github-nvim-theme',
+            config = function()
+                require('github-theme').setup({
+                    -- ...
+                })
+            end
+        })
+
         use "lukas-reineke/indent-blankline.nvim"
         use "yamatsum/nvim-cursorline"
 
         -- using bufferline.nvim
         use {
             'akinsho/bufferline.nvim',
-            tag = "v2.*",
+            tag = "v3.*",
             requires = 'kyazdani42/nvim-web-devicons'
         }
 
@@ -30,19 +39,19 @@ return require('packer').startup({
             requires = {
                 'kyazdani42/nvim-web-devicons',
                 opt = true
-            }
+            },
+            config = function()
+                require('lualine').setup()
+            end
         }
 
         use {
-            'kyazdani42/nvim-tree.lua',
+            'nvim-tree/nvim-tree.lua',
             requires = {
-                'kyazdani42/nvim-web-devicons', -- optional, for file icon
+                'nvim-tree/nvim-web-devicons', -- optional, for file icons
             },
-            tag = 'nightly',
+            tag = 'nightly' -- optional, updated every week. (see issue #1193)
         }
-
-        -- Install without configuration
-        use 'navarasu/onedark.nvim'
 
         use {
             'nvim-telescope/telescope.nvim',
@@ -85,9 +94,19 @@ return require('packer').startup({
             tag = '*'
         }
 
-        use "terrortylor/nvim-comment"
+        use {
+            'numToStr/Comment.nvim',
+            config = function()
+                require('Comment').setup()
+            end
+        }
 
-        use "windwp/nvim-autopairs"
+        use {
+            "windwp/nvim-autopairs",
+            config = function()
+                require("nvim-autopairs").setup {}
+            end
+        }
     end,
     config = {
         display = {

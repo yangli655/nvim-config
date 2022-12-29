@@ -22,11 +22,9 @@
 --     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
 --     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
 --     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
---     vim.keymap.set('n', '<space>wl',
---         function()
---             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
---         end, bufopts
---     )
+--     vim.keymap.set('n', '<space>wl', function()
+--         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+--     end, bufopts)
 --     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
 --     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
 --     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
@@ -42,29 +40,15 @@
 --     on_attach = on_attach,
 --     flags = lsp_flags,
 -- }
--- require('lspconfig')['clangd'].setup {
+-- require('lspconfig')['tsserver'].setup {
 --     on_attach = on_attach,
 --     flags = lsp_flags,
 -- }
--- require('lspconfig').sumneko_lua.setup {
+-- require('lspconfig')['rust_analyzer'].setup {
+--     on_attach = on_attach,
+--     flags = lsp_flags,
+--     -- Server-specific settings...
 --     settings = {
---         Lua = {
---             runtime = {
---                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
---                 version = 'LuaJIT',
---             },
---             diagnostics = {
---                 -- Get the language server to recognize the `vim` global
---                 globals = { 'vim' },
---             },
---             workspace = {
---                 -- Make the server aware of Neovim runtime files
---                 library = vim.api.nvim_get_runtime_file("", true),
---             },
---             -- Do not send telemetry data containing a randomized but unique identifier
---             telemetry = {
---                 enable = false,
---             },
---         },
---     },
+--         ["rust-analyzer"] = {}
+--     }
 -- }
