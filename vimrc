@@ -56,9 +56,18 @@ set autoread
 set cindent
 set completeopt=longest,menu
 
-"window
-"set splitbelow "让新开的窗口出现在下方
-set splitright "让新开的窗口出现在右方
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+nnoremap <leader>e :Vex<CR>
+
+" 设置netrw
+let g:netrw_banner = 1       "设置是否显示横幅
+let g:netrw_liststyle = 3    "设置目录列表样式树形
+let g:netrw_browse_split = 4 "在之前的窗口编辑文件
+let g:netrw_altv = 1         "水平分割时，文件浏览器始终显示在左边
+let g:netrw_winsize = 25     "设置文件浏览器窗口宽度为25%
+nnoremap <leader>e :Lexplore<CR>    " 打开或关闭目录树
 
 imap jk <ESC>
 nnoremap tn  :tabnew<CR>
@@ -69,7 +78,6 @@ nnoremap tc  :tabclose<CR>
 nnoremap bn :bnext<CR>
 nnoremap bp :bprev<CR>
 nnoremap bd :bdelete<CR>
-
 
 " 状态行显示的内容
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
