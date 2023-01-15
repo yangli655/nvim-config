@@ -68,8 +68,11 @@ return require('packer').startup({
 
         -- Treesittetr
         use {
-            "nvim-treesitter/nvim-treesitter",
-            run = ":TSUpdate",
+            'nvim-treesitter/nvim-treesitter',
+            run = function()
+                local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+                ts_update()
+            end,
         }
 
         -- Collection of configurations for the built-in LSP client
@@ -78,13 +81,17 @@ return require('packer').startup({
         use({
             "glepnir/lspsaga.nvim",
             branch = "main",
+            config = function()
+                require('lspsaga').setup({})
+            end,
         })
 
-        use "hrsh7th/nvim-cmp" -- The completion plugin
         use "hrsh7th/cmp-nvim-lsp"
         use "hrsh7th/cmp-buffer" -- buffer completions
         use "hrsh7th/cmp-path" -- path completions
         use "hrsh7th/cmp-cmdline" -- cmdline completions
+        use "hrsh7th/nvim-cmp" -- The completion plugin
+
         -- For luasnip users
         use "L3MON4D3/LuaSnip"
         use "saadparwaiz1/cmp_luasnip"
