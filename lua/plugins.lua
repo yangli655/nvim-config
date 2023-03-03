@@ -1,29 +1,22 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
+-- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup({
     function()
         -- Packer can manage itself
-        use 'wbthomason/packer.nvim'
+        use "wbthomason/packer.nvim"
 
         use {
             'goolord/alpha-nvim',
             requires = { 'nvim-tree/nvim-web-devicons' },
-            config = function()
-                require 'alpha'.setup(require 'alpha.themes.startify'.config)
-            end
         }
 
         use({
             'projekt0n/github-nvim-theme',
             tag = 'v0.0.7',
             -- or branch = '0.0.x'
-            config = function()
-                require('github-theme').setup({
-                    -- ...
-                })
-            end
         })
 
         use {
@@ -37,34 +30,15 @@ return require('packer').startup({
             end
         }
 
-        use {
-            'yamatsum/nvim-cursorline',
-            config = function()
-                require('nvim-cursorline').setup {
-                    cursorline = {
-                        enable = true,
-                        timeout = 1000,
-                        number = false,
-                    },
-                    cursorword = {
-                        enable = true,
-                        min_length = 3,
-                        hl = { underline = true },
-                    }
-                }
-            end
-        }
+        use "yamatsum/nvim-cursorline"
 
         use {
             'akinsho/bufferline.nvim',
             tag = "v3.*",
             requires = 'nvim-tree/nvim-web-devicons',
-            config = function()
-                -- set termguicolors to enable highlight groups
-                vim.opt.termguicolors = true
-                require("bufferline").setup {}
-            end
         }
+
+        use "WhoIsSethDaniel/lualine-lsp-progress.nvim"
 
         use {
             'nvim-lualine/lualine.nvim',
@@ -72,9 +46,6 @@ return require('packer').startup({
                 'nvim-tree/nvim-web-devicons',
                 opt = true
             },
-            config = function()
-                require('lualine').setup()
-            end
         }
 
         use {
@@ -82,13 +53,7 @@ return require('packer').startup({
             requires = {
                 'nvim-tree/nvim-web-devicons', -- optional, for file icons
             },
-            tag = 'nightly', -- optional, updated every week.
-            config = function()
-                -- disable netrw at the very start of your init.lua (strongly advised)
-                vim.g.loaded_netrw = 1
-                vim.g.loaded_netrwPlugin = 1
-                require("nvim-tree").setup()
-            end
+            tag = 'nightly',                   -- optional, updated every week.
         }
 
         use {
@@ -113,7 +78,8 @@ return require('packer').startup({
         }
 
         -- Collection of configurations for the built-in LSP client
-        use 'neovim/nvim-lspconfig'
+        -- use "neovim/nvim-lspconfig"
+        use "onsails/lspkind.nvim"
 
         use({
             "glepnir/lspsaga.nvim",
@@ -128,11 +94,17 @@ return require('packer').startup({
             }
         })
 
+        use {
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "neovim/nvim-lspconfig",
+        }
+
         use "hrsh7th/cmp-nvim-lsp"
-        use "hrsh7th/cmp-buffer" -- buffer completions
-        use "hrsh7th/cmp-path" -- path completions
+        use "hrsh7th/cmp-buffer"  -- buffer completions
+        use "hrsh7th/cmp-path"    -- path completions
         use "hrsh7th/cmp-cmdline" -- cmdline completions
-        use "hrsh7th/nvim-cmp" -- The completion plugin
+        use "hrsh7th/nvim-cmp"    -- The completion plugin
 
         -- For luasnip users
         use "L3MON4D3/LuaSnip"
@@ -143,38 +115,19 @@ return require('packer').startup({
             tag = '*'
         }
 
-        use {
-            'numToStr/Comment.nvim',
-            config = function()
-                require('Comment').setup()
-            end
-        }
+        use 'numToStr/Comment.nvim'
 
-        use {
-            "windwp/nvim-autopairs",
-            config = function()
-                require("nvim-autopairs").setup {}
-            end
-        }
+        use 'windwp/nvim-autopairs'
 
-        use {
-            "folke/which-key.nvim",
-            config = function()
-                vim.o.timeout = true
-                vim.o.timeoutlen = 300
-                require("which-key").setup {
-                    -- your configuration comes here
-                    -- or leave it empty to use the default settings
-                    -- refer to the configuration section below
-                }
-            end
-        }
+        use "folke/which-key.nvim"
     end,
     config = {
         display = {
-            open_fn = function()
-                return require('packer.util').float({ border = 'single' })
-            end
+            open_fn = require('packer.util').float,
+        },
+        profile = {
+            enable = true,
+            threshold = 1 -- the amount in ms that a plugin's load time must be over for it to be included in the profile
         }
     }
 })

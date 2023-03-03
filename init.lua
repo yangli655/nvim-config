@@ -3,9 +3,22 @@ if (not vim.g.vscode) then
     require "keymaps"
     require "plugins"
 
-    require "plugins-config"
-    require "plugins-config.nvim-treesitter"
-    require "plugins-config.telescope"
-    require "plugins-config.cmp"
-    require "plugins-config.toggleterm"
+    require "ui.alpha"
+    require "ui.github-nvim-theme"
+
+    require "lsp.cmp"
+    require "lsp.lspsoga"
+    require "lsp.lspkind"
+    require "lsp.mason"
+
+    require "utils.autopairs"
+    require "utils.bufferline"
+    require "utils.comment"
+    require "utils.lualine"
+    require "utils.nvim-cursorline"
+    require "utils.nvim-tree"
+    require "utils.nvim-treesitter"
+    require "utils.telescope"
+    require "utils.toggleterm"
+    require "utils.which-key"
 end
