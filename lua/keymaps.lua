@@ -73,7 +73,7 @@ keymap("n", "tc", ":tabclose<cr>", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
 -- bufferline --
-keymap("n", "bbp", ":BufferLinePick<cr>", opts)
+keymap("n", "bh", ":BufferLinePick<cr>", opts)
 
 -- telescope --
 -- Mappings	            Action

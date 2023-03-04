@@ -5,6 +5,7 @@ if (not vim.g.vscode) then
 
     require "ui.alpha"
     require "ui.github-nvim-theme"
+    require "ui.noice"
 
     require "lsp.cmp"
     require "lsp.lspsoga"
@@ -19,6 +20,7 @@ if (not vim.g.vscode) then
     require "utils.nvim-tree"
     require "utils.nvim-treesitter"
     require "utils.telescope"
+    require "utils.persisted"
     require "utils.toggleterm"
-    require "utils.which-key"
+    -- require "utils.which-key"
 end
