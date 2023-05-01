@@ -46,7 +46,7 @@ return require('packer').startup({
 
         use {
             'akinsho/bufferline.nvim',
-            tag = "v3.*",
+            tag = "*",
             requires = 'nvim-tree/nvim-web-devicons',
         }
 
@@ -95,10 +95,12 @@ return require('packer').startup({
 
         use({
             "glepnir/lspsaga.nvim",
+            opt = true,
             branch = "main",
-            config = function()
-                require('lspsaga').setup({})
-            end,
+            event = "LspAttach",
+            -- config = function()
+            --     require('lspsaga').setup({})
+            -- end,
             requires = {
                 { "nvim-tree/nvim-web-devicons" },
                 --Please make sure you install markdown and markdown_inline parser

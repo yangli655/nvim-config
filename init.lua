@@ -8,8 +8,7 @@ if (not vim.g.vscode) then
     require "ui.noice"
 
     require "lsp.cmp"
-    require "lsp.lspsoga"
-    require "lsp.lspkind"
+    require "lsp.lspsaga"
     require "lsp.mason"
 
     require "utils.autopairs"

@@ -20,7 +20,7 @@ keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
 -- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
 -- It also supports tagstack
 -- Use <C-t> to jump back
-keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
 
 -- Go to definition
 keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
@@ -41,12 +41,14 @@ keymap("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")
 -- unfocus the show_line_diagnostics floating window
 keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
 
--- Show cursor diagnostics
--- Like show_line_diagnostics, it supports passing the ++unfocus argument
-keymap("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
-
 -- Show buffer diagnostics
 keymap("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
+
+-- Show workspace diagnostics
+keymap("n", "<leader>sw", "<cmd>Lspsaga show_workspace_diagnostics<CR>")
+
+-- Show cursor diagnostics
+keymap("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
 -- Diagnostic jump
 -- You can use <C-o> to jump back to your previous location
