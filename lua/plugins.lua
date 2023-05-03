@@ -6,18 +6,10 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup({
     function()
         -- Packer can manage itself
-        use "wbthomason/packer.nvim"
 
-        use {
-            'goolord/alpha-nvim',
-            requires = { 'nvim-tree/nvim-web-devicons' },
-        }
 
-        use({
-            'projekt0n/github-nvim-theme',
-            tag = 'v0.0.7',
-            -- or branch = '0.0.x'
-        })
+
+
 
         use {
             "folke/noice.nvim",
@@ -42,43 +34,14 @@ return require('packer').startup({
             end
         }
 
-        use "yamatsum/nvim-cursorline"
 
-        use {
-            'akinsho/bufferline.nvim',
-            tag = "*",
-            requires = 'nvim-tree/nvim-web-devicons',
-        }
 
-        use "WhoIsSethDaniel/lualine-lsp-progress.nvim"
 
-        use {
-            'nvim-lualine/lualine.nvim',
-            requires = {
-                'nvim-tree/nvim-web-devicons',
-                opt = true
-            },
-        }
 
-        use {
-            'nvim-tree/nvim-tree.lua',
-            requires = {
-                'nvim-tree/nvim-web-devicons', -- optional, for file icons
-            },
-            tag = 'nightly',                   -- optional, updated every week.
-        }
 
-        use {
-            'nvim-telescope/telescope.nvim',
-            tag = '0.1.1',
-            -- or branch = '0.1.x',
-            requires = { { 'nvim-lua/plenary.nvim' } }
-        }
 
-        use {
-            'nvim-telescope/telescope-fzf-native.nvim',
-            run = 'make'
-        }
+
+
 
         -- Treesittetr
         use {
@@ -89,9 +52,7 @@ return require('packer').startup({
             end,
         }
 
-        -- Collection of configurations for the built-in LSP client
-        -- use "neovim/nvim-lspconfig"
-        use "onsails/lspkind.nvim"
+
 
         use({
             "glepnir/lspsaga.nvim",
@@ -129,11 +90,7 @@ return require('packer').startup({
             tag = '*'
         }
 
-        use "numToStr/Comment.nvim"
 
-        use "windwp/nvim-autopairs"
-
-        use "olimorris/persisted.nvim"
 
         use "folke/which-key.nvim"
     end,
