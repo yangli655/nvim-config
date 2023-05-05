@@ -1,5 +1,5 @@
 vim.opt.termguicolors = true
-require("bufferline").setup{
+require("bufferline").setup {
     options = {
         numbers = "ordinal",
         diagnostics = "nvim_lsp",
@@ -13,7 +13,7 @@ require("bufferline").setup{
         hover = {
             enabled = true,
             delay = 200,
-            reveal = {'close'}
+            reveal = { 'close' }
         },
     }
 }
