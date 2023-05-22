@@ -9,6 +9,10 @@ vim.g.maplocalleader = " "
 
 -- Insert Mode --
 keymap("i", "jk", "<ESC>", opts)
+keymap("i", "<up>", "<nop>", opts)
+keymap("i", "<down>", "<nop>", opts)
+keymap("i", "<left>", "<nop>", opts)
+keymap("i", "<right>", "<nop>", opts)
 
 -- Normal Mode --
 -- Better window navigation
@@ -16,6 +20,10 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<up>", "<nop>", opts)
+keymap("n", "<down>", "<nop>", opts)
+keymap("n", "<left>", "<nop>", opts)
+keymap("n", "<right>", "<nop>", opts)
 
 -- better buffer op --
 keymap("n", "bn", ":bnext<cr>", opts)
@@ -53,15 +61,19 @@ keymap("n", "bh", ":BufferLinePick<cr>", opts)
 -- `gb` - Toggles the region using blockwise comment
 
 -- Telescope --
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
+vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 
 -- Persisted --
-vim.keymap.set("n", "<leader>sp", function() vim.cmd("Telescope persisted") end)
-vim.keymap.set("n", "<leader>sl", function() vim.cmd("SessionLoadLast") end)
+vim.keymap.set("n", "<leader>sp", function()
+	vim.cmd("Telescope persisted")
+end)
+vim.keymap.set("n", "<leader>sl", function()
+	vim.cmd("SessionLoadLast")
+end)
 
 -- Formatter.nvim --
 keymap("n", "<leader>f", ":Format<cr>", opts)
