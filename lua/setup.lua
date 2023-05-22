@@ -13,8 +13,8 @@ local packer_bootstrap = ensure_packer()
 
 vim.cmd([[
 augroup packer_user_config
-autocmd!
-autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
 augroup end
 ]])
 
@@ -102,6 +102,8 @@ return require('packer').startup({
         -- For luasnip users
         use "L3MON4D3/LuaSnip"
         use "saadparwaiz1/cmp_luasnip"
+
+        use "mhartington/formatter.nvim"
 
         -- Automatically set up your configuration after cloning packer.nvim
         -- Put this at the end after all plugins

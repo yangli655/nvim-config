@@ -62,3 +62,14 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 -- Persisted --
 vim.keymap.set("n", "<leader>sp", function() vim.cmd("Telescope persisted") end)
 vim.keymap.set("n", "<leader>sl", function() vim.cmd("SessionLoadLast") end)
+
+-- Formatter.nvim --
+keymap("n", "<leader>f", ":Format<cr>", opts)
+keymap("n", "<leader>F", ":FormatWrite<cr>", opts)
+-- Format after save --
+vim.cmd([[    
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost * FormatWrite
+augroup END
+]])

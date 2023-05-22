@@ -23,4 +23,5 @@ if (not vim.g.vscode) then
     require("lsp.mason")
     require("lsp.lspsaga")
     require("lsp.cmp")
+    require("lsp.formatter")
 end
