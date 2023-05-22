@@ -20,10 +20,28 @@ require("formatter").setup({
 			require("formatter.filetypes.python").black,
 		},
 		cpp = {
-			require("formatter.filetypes.cpp").clangformat,
+			function()
+				return {
+					exe = "clang-format",
+					args = {
+						"--style='{BasedOnStyle: llvm, IndentWidth: 4}'",
+					},
+					stdin = true,
+					try_node_module = true,
+				}
+			end,
 		},
 		c = {
-			require("formatter.filetypes.cpp").clangformat,
+			function()
+				return {
+					exe = "clang-format",
+					args = {
+						"--style='{BasedOnStyle: llvm, IndentWidth: 4}'",
+					},
+					stdin = true,
+					try_node_module = true,
+				}
+			end,
 		},
 	},
 })
