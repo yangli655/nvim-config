@@ -1,16 +1,35 @@
 -- https://github.com/folke/lazy.nvim
 
-return {
-    -- UI setting --
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- Example using a list of specs with the default options
+vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
+
+require("lazy").setup({
+    -- -- UI setting --
     {
-        'goolord/alpha-nvim',
-        event = "VimEnter",
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
-        opts = {
-            require 'alpha.themes.startify'.config
-        }
+        'projekt0n/github-nvim-theme',
+        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+        priority = 1000, -- make sure to load this before all the other start plugins
+        config = function()
+            require('github-theme').setup({
+                -- ...
+            })
+
+            vim.cmd('colorscheme github_dark')
+        end,
     },
-    "projekt0n/github-nvim-theme",
     {
         "nvim-tree/nvim-tree.lua",
         version = "*",
@@ -18,6 +37,20 @@ return {
         dependencies = {
             "nvim-tree/nvim-web-devicons",
         },
+    },
+    {
+        'willothy/veil.nvim',
+        lazy = false,
+        dependencies = {
+            -- All optional, only required for the default setup.
+            -- If you customize your config, these aren't necessary.
+            "nvim-telescope/telescope.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope-file-browser.nvim"
+        },
+        config = true,
+        -- or configure with:
+        -- opts = { ... }
     },
     {
         "nvim-lualine/lualine.nvim",
@@ -40,7 +73,10 @@ return {
         event = "InsertEnter",
         opts = {} -- this is equalent to setup({}) function
     },
-    "numToStr/Comment.nvim",
+    {
+        "numToStr/Comment.nvim",
+        lazy = true,
+    },
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate"
@@ -58,6 +94,10 @@ return {
     {
         'akinsho/toggleterm.nvim',
         version = "*",
+        config = true
+    },
+    {
+        "olimorris/persisted.nvim",
         config = true
     },
     -- {
@@ -88,13 +128,19 @@ return {
         }
     },
     "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",  -- buffer completions
-    "hrsh7th/cmp-path",    -- path completions
-    "hrsh7th/cmp-cmdline", -- cmdline completions
-    "hrsh7th/nvim-cmp",    -- The completion plugin
+    "hrsh7th/cmp-buffer",   -- buffer completions
+    "hrsh7th/cmp-path",     -- path completions
+    "hrsh7th/cmp-cmdline",  -- cmdline completions
+    {
+        "hrsh7th/nvim-cmp", -- The completion plugin
+        lazy = true,
+    },
     -- For luasnip users
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
 
-    "mhartington/formatter.nvim",
-}
+    {
+        "mhartington/formatter.nvim",
+        lazy = true,
+    },
+})
