@@ -43,6 +43,7 @@ keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 -- bufferline pick --
 -- bufferline --
 keymap("n", "bh", ":BufferLinePick<cr>", opts)
+keymap("n", "bH", ":BufferLinePickClose<cr>", opts)
 
 -- Comment.nvim --
 -- NORMAL mode
@@ -69,17 +70,17 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 
 -- Persisted --
 vim.keymap.set("n", "<leader>sp", function()
-	vim.cmd("Telescope persisted")
+  vim.cmd("Telescope persisted")
 end)
 vim.keymap.set("n", "<leader>sl", function()
-	vim.cmd("SessionLoadLast")
+  vim.cmd("SessionLoadLast")
 end)
 
 -- Formatter.nvim --
 keymap("n", "<leader>f", ":Format<cr>", opts)
 keymap("n", "<leader>F", ":FormatWrite<cr>", opts)
 -- Format after save --
-vim.cmd([[    
+vim.cmd([[
 augroup FormatAutogroup
   autocmd!
   autocmd BufWritePost * FormatWrite
