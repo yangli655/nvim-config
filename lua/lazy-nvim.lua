@@ -30,6 +30,7 @@ require("lazy").setup({
             vim.cmd('colorscheme github_dark')
         end,
     },
+
     {
         "nvim-tree/nvim-tree.lua",
         version = "*",
@@ -38,6 +39,7 @@ require("lazy").setup({
             "nvim-tree/nvim-web-devicons",
         },
     },
+
     {
         'willothy/veil.nvim',
         lazy = false,
@@ -52,6 +54,7 @@ require("lazy").setup({
         -- or configure with:
         -- opts = { ... }
     },
+
     {
         "nvim-lualine/lualine.nvim",
         dependencies = {
@@ -59,11 +62,13 @@ require("lazy").setup({
             lazy = true,
         }
     },
+
     {
         'akinsho/bufferline.nvim',
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons'
     },
+
     "lukas-reineke/indent-blankline.nvim",
     "yamatsum/nvim-cursorline",
 
@@ -73,29 +78,35 @@ require("lazy").setup({
         event = "InsertEnter",
         opts = {} -- this is equalent to setup({}) function
     },
+
     {
         "numToStr/Comment.nvim",
         lazy = true,
     },
+
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate"
     },
+
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.2',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
+
     {
         'nvim-telescope/telescope-fzf-native.nvim',
         build =
         'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
     },
+
     {
         'akinsho/toggleterm.nvim',
         version = "*",
         config = true
     },
+
     {
         "olimorris/persisted.nvim",
         config = true
@@ -113,28 +124,32 @@ require("lazy").setup({
     --         -- refer to the configuration section below
     --     }
     -- }
+
     -- LSP --
     {
         "williamboman/mason.nvim",
         build = ":MasonUpdate" -- :MasonUpdate updates registry contents
     },
+
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
+
     {
         'nvimdev/lspsaga.nvim',
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter', -- optional
-            'nvim-tree/nvim-web-devicons',     -- optional
-        }
+        config = true,
+        -- dependencies = {
+        --     'nvim-treesitter/nvim-treesitter', -- optional
+        --     'nvim-tree/nvim-web-devicons',     -- optional
+        --     'williamboman/mason-lspconfig.nvim',
+        --     'neovim/nvim-lspconfig',
+        -- }
     },
+
     "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",   -- buffer completions
-    "hrsh7th/cmp-path",     -- path completions
-    "hrsh7th/cmp-cmdline",  -- cmdline completions
-    {
-        "hrsh7th/nvim-cmp", -- The completion plugin
-        lazy = true,
-    },
+    "hrsh7th/cmp-buffer",  -- buffer completions
+    "hrsh7th/cmp-path",    -- path completions
+    "hrsh7th/cmp-cmdline", -- cmdline completions
+    "hrsh7th/nvim-cmp",    -- The completion plugin
     -- For luasnip users
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
