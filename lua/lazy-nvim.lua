@@ -84,7 +84,10 @@ require("lazy").setup({
 
 	{
 		"numToStr/Comment.nvim",
-		lazy = true,
+		opts = {
+			-- add any options here
+		},
+		lazy = false,
 	},
 
 	{
@@ -94,13 +97,13 @@ require("lazy").setup({
 
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.2",
+		tag = "0.1.4",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+		build = "make",
 	},
 
 	{
@@ -113,38 +116,19 @@ require("lazy").setup({
 		"olimorris/persisted.nvim",
 		config = true,
 	},
-	-- {
-	--     "folke/which-key.nvim",
-	--     event = "VeryLazy",
-	--     init = function()
-	--         vim.o.timeout = true
-	--         vim.o.timeoutlen = 300
-	--     end,
-	--     opts = {
-	--         -- your configuration comes here
-	--         -- or leave it empty to use the default settings
-	--         -- refer to the configuration section below
-	--     }
-	-- }
 
 	-- LSP --
-	{
-		"williamboman/mason.nvim",
-		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
-	},
-
+	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig.nvim",
 	"neovim/nvim-lspconfig",
 
 	{
 		"nvimdev/lspsaga.nvim",
 		config = true,
-		-- dependencies = {
-		--     'nvim-treesitter/nvim-treesitter', -- optional
-		--     'nvim-tree/nvim-web-devicons',     -- optional
-		--     'williamboman/mason-lspconfig.nvim',
-		--     'neovim/nvim-lspconfig',
-		-- }
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter", -- optional
+			"nvim-tree/nvim-web-devicons", -- optional
+		},
 	},
 
 	"hrsh7th/cmp-nvim-lsp",
