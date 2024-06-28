@@ -7,7 +7,7 @@ require("toggleterm").setup {
             return vim.o.columns * 0.4
         end
     end,
-    open_mapping = [[<C-\>]],
+    open_mapping = [[<c-\>]],
     autochdir = true,
     shading_factor = '1', -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
     persist_size = false,

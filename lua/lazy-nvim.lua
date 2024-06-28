@@ -1,20 +1,18 @@
 -- https://github.com/folke/lazy.nvim
 
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Example using a list of specs with the default options
-vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 require("lazy").setup({
 	-- -- UI setting --
@@ -72,6 +70,7 @@ require("lazy").setup({
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
+		opts = {}
 	},
 	"yamatsum/nvim-cursorline",
 
@@ -79,7 +78,9 @@ require("lazy").setup({
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		opts = {}, -- this is equalent to setup({}) function
+		config = true
+		-- use opts = {} for passing setup options
+		-- this is equalent to setup({}) function
 	},
 
 	{
@@ -87,7 +88,7 @@ require("lazy").setup({
 		opts = {
 			-- add any options here
 		},
-		lazy = false,
+		config = true
 	},
 
 	{
@@ -97,7 +98,7 @@ require("lazy").setup({
 
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.4",
+		tag = "0.1.8",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
@@ -114,7 +115,8 @@ require("lazy").setup({
 
 	{
 		"olimorris/persisted.nvim",
-		config = true,
+		lazy = false, -- make sure the plugin is always loaded at startup
+		config = true
 	},
 
 	-- LSP --
@@ -144,4 +146,16 @@ require("lazy").setup({
 		"mhartington/formatter.nvim",
 		lazy = true,
 	},
+	pkg = {
+		enabled = true,
+		cache = vim.fn.stdpath("state") .. "/lazy/pkg-cache.lua",
+		versions = true, -- Honor versions in pkg sources
+		-- the first package source that is found for a plugin will be used.
+		sources = {
+			"lazy",
+			"packspec",
+		},
+	},
+	-- automatically check for plugin updates
+	checker = { enabled = true },
 })

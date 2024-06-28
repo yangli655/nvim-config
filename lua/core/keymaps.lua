@@ -76,13 +76,23 @@ vim.keymap.set("n", "<leader>sl", function()
   vim.cmd("SessionLoadLast")
 end)
 
+-- SessionToggle - Determines whether to load, start or stop a session
+-- SessionStart - Start recording a session. Useful if autosave = false
+-- SessionStop - Stop recording a session
+-- SessionSave - Save the current session
+-- SessionLoad - Load the session for the current directory and current branch (if git_use_branch = true)
+-- SessionLoadLast - Load the most recent session
+-- SessionLoadFromFile - Load a session from a given path
+-- SessionDelete - Delete the current session
+
 -- Formatter.nvim --
 keymap("n", "<leader>f", ":Format<cr>", opts)
 keymap("n", "<leader>F", ":FormatWrite<cr>", opts)
 -- Format after save --
-vim.cmd([[
-augroup FormatAutogroup
-  autocmd!
-  autocmd BufWritePost * FormatWrite
-augroup END
-]])
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+augroup("__formatter__", { clear = true })
+autocmd("BufWritePost", {
+  group = "__formatter__",
+  command = ":FormatWrite",
+})

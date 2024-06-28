@@ -25,6 +25,7 @@ require("formatter").setup({
 					exe = "clang-format",
 					args = {
 						"--style='{BasedOnStyle: llvm, IndentWidth: 4}'",
+						util.escape_path(util.get_current_buffer_file_name()),
 					},
 					stdin = true,
 					try_node_module = true,
@@ -37,6 +38,7 @@ require("formatter").setup({
 					exe = "clang-format",
 					args = {
 						"--style='{BasedOnStyle: llvm, IndentWidth: 4}'",
+						util.escape_path(util.get_current_buffer_file_name()),
 					},
 					stdin = true,
 					try_node_module = true,

@@ -1,7 +1,7 @@
 local opt = vim.opt
 
 -- utf8
-vim.g.encoding = "UTF-8"
+opt.encoding = "UTF-8"
 opt.fileencoding = "utf-8"
 
 -- 设置光标所在的行号 相对行号
