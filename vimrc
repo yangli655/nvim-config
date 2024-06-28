@@ -1,4 +1,5 @@
 syntax on
+set ignorecase
 set number "设置行号
 set relativenumber "设置光标所在的行号 相对行号
 set ruler "状态栏中会显示当前的光标所在位置
