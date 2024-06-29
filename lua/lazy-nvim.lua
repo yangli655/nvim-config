@@ -156,6 +156,10 @@ require("lazy").setup({
 			"packspec",
 		},
 	},
+	rocks = {
+		enabled = false,
+		-- hererocks = false,
+	},
 	-- automatically check for plugin updates
 	checker = { enabled = true },
 })
