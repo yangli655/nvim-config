@@ -70,15 +70,20 @@ require("lazy").setup({
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		opts = {}
+		opts = {},
 	},
-	"yamatsum/nvim-cursorline",
+	{
+		"delphinus/auto-cursorline.nvim",
+		config = function()
+			require("auto-cursorline").setup({})
+		end,
+	},
 
 	-- uilts setting --
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		config = true
+		config = true,
 		-- use opts = {} for passing setup options
 		-- this is equalent to setup({}) function
 	},
@@ -88,7 +93,7 @@ require("lazy").setup({
 		opts = {
 			-- add any options here
 		},
-		config = true
+		config = true,
 	},
 
 	{
@@ -116,7 +121,7 @@ require("lazy").setup({
 	{
 		"olimorris/persisted.nvim",
 		lazy = false, -- make sure the plugin is always loaded at startup
-		config = true
+		config = true,
 	},
 
 	-- LSP --

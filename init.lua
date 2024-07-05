@@ -7,7 +7,6 @@ if not vim.g.vscode then
 	require("ui.nvim-tree")
 	require("ui.lualine")
 	require("ui.bufferline")
-	require("ui.cursorline")
 	require("ui.indent-blankline")
 
 	require("util.telescope")
