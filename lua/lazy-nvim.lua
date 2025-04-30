@@ -204,6 +204,9 @@ require("lazy").setup({
 		"mhartington/formatter.nvim",
 		lazy = true,
 	},
+
+	"lewis6991/gitsigns.nvim",
+
 	rocks = {
 		enabled = false,
 		-- hererocks = false,
