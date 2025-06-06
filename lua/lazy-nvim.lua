@@ -90,14 +90,6 @@ require("lazy").setup({
 
 	-- uilts setting --
 	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = true,
-		-- use opts = {} for passing setup options
-		-- this is equalent to setup({}) function
-	},
-
-	{
 		"numToStr/Comment.nvim",
 		opts = {
 			-- add any options here
@@ -140,6 +132,7 @@ require("lazy").setup({
 			"nvim-tree/nvim-web-devicons", -- optional
 		},
 	},
+
 	{
 		"saghen/blink.cmp",
 		-- optional: provides snippets for the snippet source
@@ -152,8 +145,8 @@ require("lazy").setup({
 		-- If you use nix, you can build from source using latest nightly rust with:
 		-- build = 'nix run .#build-plugin',
 
-		---@module 'blink.cmp'
-		---@type blink.cmp.Config
+		--- @module 'blink.cmp'
+		--- @type blink.cmp.Config
 		opts = {
 			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
 			-- 'super-tab' for mappings similar to vscode (tab to accept)
@@ -193,6 +186,42 @@ require("lazy").setup({
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		},
 		opts_extend = { "sources.default" },
+	},
+
+	{
+		"saghen/blink.pairs",
+		version = "*", -- (recommended) only required with prebuilt binaries
+
+		-- download prebuilt binaries from github releases
+		dependencies = "saghen/blink.download",
+		-- -- OR build from source
+		-- build = "cargo build --release",
+		-- -- OR build from source with nix
+		-- build = "nix run .#build-plugin",
+
+		--- @module 'blink.pairs'
+		--- @type blink.pairs.Config
+		opts = {
+			mappings = {
+				-- you can call require("blink.pairs.mappings").enable() and require("blink.pairs.mappings").disable() to enable/disable mappings at runtime
+				enabled = true,
+				-- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L10
+				pairs = {},
+			},
+			highlights = {
+				enabled = true,
+				groups = {
+					"BlinkPairsOrange",
+					"BlinkPairsPurple",
+					"BlinkPairsBlue",
+				},
+				matchparen = {
+					enabled = true,
+					group = "MatchParen",
+				},
+			},
+			debug = false,
+		},
 	},
 
 	{
