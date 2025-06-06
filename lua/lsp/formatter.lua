@@ -19,6 +19,12 @@ require("formatter").setup({
 		python = {
 			require("formatter.filetypes.python").ruff,
 		},
+		yaml = {
+			require("formatter.filetypes.yaml").yamlfmt,
+		},
+		sh = {
+			require("formatter.filetypes.sh").shfmt,
+		},
 		cpp = {
 			function()
 				return {
