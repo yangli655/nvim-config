@@ -17,7 +17,7 @@ require("formatter").setup({
 			require("formatter.filetypes.lua").stylua,
 		},
 		python = {
-			require("formatter.filetypes.python").black,
+			require("formatter.filetypes.python").ruff,
 		},
 		cpp = {
 			function()
