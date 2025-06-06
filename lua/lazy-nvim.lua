@@ -210,6 +210,11 @@ require("lazy").setup({
 		opts = {
 			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 			-- log_level = 'debug',
+			post_cwd_changed_cmds = {
+				function()
+					require("lualine").refresh() -- example refreshing the lualine status line _after_ the cwd changes
+				end,
+			},
 		},
 	},
 

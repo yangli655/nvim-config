@@ -86,3 +86,6 @@ vim.diagnostic.config({
 -- 屏蔽 ruby perl healthcheck 报错
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
+
+-- For a better experience with the plugin overall using this config for sessionoptions is recommended
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
