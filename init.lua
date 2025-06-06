@@ -7,7 +7,6 @@ if not vim.g.vscode then
 	require("ui.nvim-tree")
 	require("ui.lualine")
 	require("ui.bufferline")
-	require("ui.indent-blankline")
 
 	require("util.telescope")
 	require("util.treesitter")
@@ -16,5 +15,6 @@ if not vim.g.vscode then
 
 	require("lsp.mason")
 	require("lsp.lspsaga")
+	require("lsp.lsp")
 	require("lsp.formatter")
 end

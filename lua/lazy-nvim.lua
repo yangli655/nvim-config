@@ -75,8 +75,12 @@ require("lazy").setup({
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		opts = {},
+		-- opts = {},
+		config = function()
+			require("ibl").setup({})
+		end,
 	},
+
 	{
 		"delphinus/auto-cursorline.nvim",
 		config = function()
@@ -85,6 +89,8 @@ require("lazy").setup({
 	},
 
 	-- uilts setting --
+	"lewis6991/gitsigns.nvim",
+
 	{
 		"numToStr/Comment.nvim",
 		opts = {
@@ -242,8 +248,6 @@ require("lazy").setup({
 			},
 		},
 	},
-
-	"lewis6991/gitsigns.nvim",
 
 	rocks = {
 		enabled = false,
