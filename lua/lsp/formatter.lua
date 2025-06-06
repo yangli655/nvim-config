@@ -17,14 +17,14 @@ require("formatter").setup({
 			require("formatter.filetypes.lua").stylua,
 		},
 		python = {
-			require("formatter.filetypes.python").ruff,
+			require("formatter.filetypes.python").black,
 		},
-		yaml = {
-			require("formatter.filetypes.yaml").yamlfmt,
-		},
-		sh = {
-			require("formatter.filetypes.sh").shfmt,
-		},
+		-- yaml = {
+		-- 	require("formatter.filetypes.yaml").yamlfmt,
+		-- },
+		-- sh = {
+		-- 	require("formatter.filetypes.sh").shfmt,
+		-- },
 		cpp = {
 			function()
 				return {

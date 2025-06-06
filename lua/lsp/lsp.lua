@@ -1,6 +1,6 @@
 vim.lsp.enable("bashls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("clangd")
-vim.lsp.enable("ruff")
+vim.lsp.enable("pyright")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("jsonls")
