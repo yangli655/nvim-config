@@ -127,12 +127,6 @@ require("lazy").setup({
 		config = true,
 	},
 
-	{
-		"olimorris/persisted.nvim",
-		lazy = false, -- make sure the plugin is always loaded at startup
-		config = true,
-	},
-
 	-- LSP --
 	"mason-org/mason.nvim",
 	"mason-org/mason-lspconfig.nvim",
@@ -184,6 +178,7 @@ require("lazy").setup({
 			-- (Default) Only show the documentation popup when manually triggered
 			completion = { documentation = { auto_show = true } },
 			signature = { enabled = true },
+
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
@@ -203,6 +198,19 @@ require("lazy").setup({
 	{
 		"mhartington/formatter.nvim",
 		lazy = true,
+	},
+
+	{
+		"rmagatti/auto-session",
+		lazy = false,
+
+		---enables autocomplete for opts
+		---@module "auto-session"
+		---@type AutoSession.Config
+		opts = {
+			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+			-- log_level = 'debug',
+		},
 	},
 
 	"lewis6991/gitsigns.nvim",
