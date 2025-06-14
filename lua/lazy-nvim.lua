@@ -92,14 +92,6 @@ require("lazy").setup({
 	"lewis6991/gitsigns.nvim",
 
 	{
-		"numToStr/Comment.nvim",
-		opts = {
-			-- add any options here
-		},
-		config = true,
-	},
-
-	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 	},
