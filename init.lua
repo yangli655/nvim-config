@@ -15,5 +15,4 @@ if not vim.g.vscode then
 	require("lsp.mason")
 	require("lsp.lspsaga")
 	require("lsp.lsp")
-	require("lsp.formatter")
 end

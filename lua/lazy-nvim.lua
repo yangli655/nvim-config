@@ -245,8 +245,24 @@ require("lazy").setup({
 	},
 
 	{
-		"mhartington/formatter.nvim",
-		lazy = true,
+		"stevearc/conform.nvim",
+		config = function()
+			require("conform").setup({
+				formatters_by_ft = {
+					lua = { "stylua" },
+					python = { "black" },
+					bash = { "shfmt" },
+					c = { "clang-format" },
+					cpp = { "clang-format" },
+					yaml = { "yamlfmt" },
+				},
+				format_on_save = {
+					-- These options will be passed to conform.format()
+					timeout_ms = 500,
+					lsp_format = "fallback",
+				},
+			})
+		end,
 	},
 
 	{

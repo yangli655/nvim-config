@@ -51,15 +51,3 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-
--- Formatter.nvim --
-keymap("n", "<leader>f", ":Format<cr>", opts)
-keymap("n", "<leader>F", ":FormatWrite<cr>", opts)
--- Format after save --
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-augroup("__formatter__", { clear = true })
-autocmd("BufWritePost", {
-	group = "__formatter__",
-	command = ":FormatWrite",
-})
