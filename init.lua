@@ -10,7 +10,6 @@ if not vim.g.vscode then
 
 	require("util.telescope")
 	require("util.treesitter")
-	require("util.toggleterm")
 	require("util.gitsigns")
 
 	require("lsp.mason")
