@@ -107,12 +107,6 @@ require("lazy").setup({
 		build = "make",
 	},
 
-	{
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		config = true,
-	},
-
 	-- LSP --
 	"mason-org/mason.nvim",
 	"mason-org/mason-lspconfig.nvim",
