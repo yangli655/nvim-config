@@ -1,9 +1,6 @@
 if not vim.g.vscode then
 	require("lazy-nvim")
 
-	require("core.options")
-	require("core.keymaps")
-
 	require("ui.nvim-tree")
 	require("ui.lualine")
 	require("ui.bufferline")
@@ -15,4 +12,7 @@ if not vim.g.vscode then
 	require("lsp.mason")
 	require("lsp.lspsaga")
 	require("lsp.lsp")
+
+	require("core.options")
+	require("core.keymaps")
 end

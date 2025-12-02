@@ -89,3 +89,9 @@ vim.g.loaded_perl_provider = 0
 
 -- For a better experience with the plugin overall using this config for sessionoptions is recommended
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
+vim.wo.foldmethod = "expr"
+vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+vim.wo.foldenable = false
+vim.wo.foldlevel = 99
