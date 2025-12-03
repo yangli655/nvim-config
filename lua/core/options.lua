@@ -43,7 +43,7 @@ opt.cmdheight = 1
 opt.autoread = true
 
 -- 禁止折行
-vim.wo.wrap = false
+opt.wrap = false
 
 -- 鼠标支持
 opt.mouse:append("a")
@@ -56,9 +56,6 @@ opt.swapfile = false
 -- split window 从下边和右边出现
 opt.splitbelow = true
 opt.splitright = true
-
--- 自动补全不自动选中
-vim.g.completeopt = "menu,menuone,noselect,noinsert"
 
 -- 样式
 opt.termguicolors = true
@@ -87,11 +84,14 @@ vim.diagnostic.config({
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 
+-- 自动补全不自动选中
+vim.g.completeopt = "menu,menuone,noselect,noinsert"
+
 -- For a better experience with the plugin overall using this config for sessionoptions is recommended
-vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
-vim.wo.foldmethod = "expr"
-vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
-vim.wo.foldenable = false
-vim.wo.foldlevel = 99
+opt.foldenable = false
+opt.foldlevel = 99
