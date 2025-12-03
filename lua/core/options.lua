@@ -108,9 +108,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			opt.foldmethod = "expr"
 			opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
 
-			print("✓ LSP based fold enable" .. client.name)
+			print("✓ LSP based fold " .. client.name)
 		else
-			print("✗ treesitter based fold enable " .. client.name)
+			print("✗ treesitter based fold " .. client.name)
 		end
 	end,
 })
