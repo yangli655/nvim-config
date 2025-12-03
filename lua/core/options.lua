@@ -95,3 +95,22 @@ opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
 opt.foldenable = false
 opt.foldlevel = 99
+
+-- LSP 自动检测并启用折叠
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("LSPFolding", { clear = true }),
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		local bufnr = args.buf
+
+		-- 检查 LSP 服务器是否支持折叠
+		if client and client:supports_method("textDocument/foldingRange") then
+			opt.foldmethod = "expr"
+			opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
+
+			print("✓ LSP based fold enable" .. client.name)
+		else
+			print("✗ treesitter based fold enable " .. client.name)
+		end
+	end,
+})
