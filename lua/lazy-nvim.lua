@@ -250,7 +250,7 @@ require("lazy").setup({
 			require("conform").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
-					python = { "black" },
+					python = { "ruff_format" },
 					bash = { "shfmt" },
 					c = { "clang-format" },
 					cpp = { "clang-format" },
