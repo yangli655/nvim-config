@@ -107,10 +107,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		if client and client:supports_method("textDocument/foldingRange") then
 			opt.foldmethod = "expr"
 			opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
-
-			print("✓ LSP based fold " .. client.name)
-		else
-			print("✗ treesitter based fold " .. client.name)
 		end
 	end,
 })

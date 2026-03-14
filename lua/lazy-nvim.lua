@@ -72,16 +72,8 @@ require("lazy").setup({
 	},
 
 	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		-- -@module "ibl"
-		-- -@type ibl.config
-		opts = {},
-	},
-
-	{
 		"kylechui/nvim-surround",
-		version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+		version = "^4.0.0", -- Use for stability; omit to use `main` branch for the latest features
 		event = "VeryLazy",
 		config = function()
 			require("nvim-surround").setup({
@@ -109,18 +101,121 @@ require("lazy").setup({
 		lazy = false,
 		build = ":TSUpdate",
 	},
-
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "v0.2.0",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		version = "*",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			-- optional but recommended
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		},
 	},
 
 	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "make",
-	},
+		"saghen/blink.pairs",
+		version = "*", -- (recommended) only required with prebuilt binaries
 
+		-- download prebuilt binaries from github releases
+		dependencies = "saghen/blink.download",
+		-- OR build from source, requires nightly:
+		-- https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+		-- build = 'cargo build --release',
+		-- If you use nix, you can build from source using latest nightly rust with:
+		-- build = 'nix run .#build-plugin',
+
+		--- @module 'blink.pairs'
+		--- @type blink.pairs.Config
+		opts = {
+			mappings = {
+				-- you can call require("blink.pairs.mappings").enable()
+				-- and require("blink.pairs.mappings").disable()
+				-- to enable/disable mappings at runtime
+				enabled = true,
+				cmdline = true,
+				-- or disable with `vim.g.pairs = false` (global) and `vim.b.pairs = false` (per-buffer)
+				-- and/or with `vim.g.blink_pairs = false` and `vim.b.blink_pairs = false`
+				disabled_filetypes = {},
+				-- see the defaults:
+				-- https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L14
+				pairs = {},
+			},
+			highlights = {
+				enabled = true,
+				-- requires require('vim._extui').enable({}), otherwise has no effect
+				cmdline = true,
+				groups = {
+					"BlinkPairsOrange",
+					"BlinkPairsPurple",
+					"BlinkPairsBlue",
+				},
+				unmatched_group = "BlinkPairsUnmatched",
+
+				-- highlights matching pairs under the cursor
+				matchparen = {
+					enabled = true,
+					-- known issue where typing won't update matchparen highlight, disabled by default
+					cmdline = false,
+					-- also include pairs not on top of the cursor, but surrounding the cursor
+					include_surrounding = false,
+					group = "BlinkPairsMatchParen",
+					priority = 250,
+				},
+			},
+			debug = false,
+		},
+	},
+	{
+		"saghen/blink.indent",
+		--- @module 'blink.indent'
+		--- @type blink.indent.Config
+		opts = {
+			blocked = {
+				-- default: 'terminal', 'quickfix', 'nofile', 'prompt'
+				buftypes = { include_defaults = true },
+				-- default: 'lspinfo', 'packer', 'checkhealth', 'help', 'man', 'gitcommit', 'dashboard', ''
+				filetypes = { include_defaults = true },
+			},
+			mappings = {
+				-- which lines around the scope are included for 'ai': 'top', 'bottom', 'both', or 'none'
+				border = "both",
+				-- set to '' to disable
+				-- textobjects (e.g. `y2ii` to yank current and outer scope)
+				object_scope = "ii",
+				object_scope_with_border = "ai",
+				-- motions
+				goto_top = "[i",
+				goto_bottom = "]i",
+			},
+			static = {
+				enabled = true,
+				char = "▎",
+				whitespace_char = nil, -- inherits from `vim.opt.listchars:get().space` when `nil` (see `:h listchars`)
+				priority = 1,
+				-- specify multiple highlights here for rainbow-style indent guides
+				-- highlights = { 'BlinkIndentRed', 'BlinkIndentOrange', 'BlinkIndentYellow', 'BlinkIndentGreen', 'BlinkIndentViolet', 'BlinkIndentCyan' },
+				highlights = { "BlinkIndent" },
+			},
+			scope = {
+				enabled = true,
+				char = "▎",
+				priority = 1000,
+				-- set this to a single highlight, such as 'BlinkIndent' to disable rainbow-style indent guides
+				-- highlights = { 'BlinkIndentScope' },
+				-- optionally add: 'BlinkIndentRed', 'BlinkIndentCyan', 'BlinkIndentYellow', 'BlinkIndentGreen'
+				highlights = { "BlinkIndentOrange", "BlinkIndentViolet", "BlinkIndentBlue" },
+				-- enable to show underlines on the line above the current scope
+				underline = {
+					enabled = false,
+					-- optionally add: 'BlinkIndentRedUnderline', 'BlinkIndentCyanUnderline', 'BlinkIndentYellowUnderline', 'BlinkIndentGreenUnderline'
+					highlights = {
+						"BlinkIndentOrangeUnderline",
+						"BlinkIndentVioletUnderline",
+						"BlinkIndentBlueUnderline",
+					},
+				},
+			},
+		},
+	},
 	-- LSP --
 	"mason-org/mason.nvim",
 	"mason-org/mason-lspconfig.nvim",
@@ -128,7 +223,9 @@ require("lazy").setup({
 
 	{
 		"nvimdev/lspsaga.nvim",
-		config = true,
+		config = function()
+			require("lspsaga").setup({})
+		end,
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter", -- optional
 			"nvim-tree/nvim-web-devicons", -- optional
@@ -191,70 +288,17 @@ require("lazy").setup({
 	},
 
 	{
-		"saghen/blink.pairs",
-		version = "*", -- (recommended) only required with prebuilt binaries
-
-		-- download prebuilt binaries from github releases
-		dependencies = "saghen/blink.download",
-		-- OR build from source, requires nightly:
-		-- https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-		-- build = 'cargo build --release',
-		-- If you use nix, you can build from source using latest nightly rust with:
-		-- build = 'nix run .#build-plugin',
-
-		--- @module 'blink.pairs'
-		--- @type blink.pairs.Config
-		opts = {
-			mappings = {
-				-- you can call require("blink.pairs.mappings").enable()
-				-- and require("blink.pairs.mappings").disable()
-				-- to enable/disable mappings at runtime
-				enabled = true,
-				cmdline = true,
-				-- or disable with `vim.g.pairs = false` (global) and `vim.b.pairs = false` (per-buffer)
-				-- and/or with `vim.g.blink_pairs = false` and `vim.b.blink_pairs = false`
-				disabled_filetypes = {},
-				-- see the defaults:
-				-- https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L14
-				pairs = {},
-			},
-			highlights = {
-				enabled = true,
-				-- requires require('vim._extui').enable({}), otherwise has no effect
-				cmdline = true,
-				groups = {
-					"BlinkPairsOrange",
-					"BlinkPairsPurple",
-					"BlinkPairsBlue",
-				},
-				unmatched_group = "BlinkPairsUnmatched",
-
-				-- highlights matching pairs under the cursor
-				matchparen = {
-					enabled = true,
-					-- known issue where typing won't update matchparen highlight, disabled by default
-					cmdline = false,
-					-- also include pairs not on top of the cursor, but surrounding the cursor
-					include_surrounding = false,
-					group = "BlinkPairsMatchParen",
-					priority = 250,
-				},
-			},
-			debug = false,
-		},
-	},
-
-	{
 		"stevearc/conform.nvim",
 		config = function()
 			require("conform").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
-					python = { "ruff_format" },
+					python = { "black" },
 					bash = { "shfmt" },
 					c = { "clang-format" },
 					cpp = { "clang-format" },
 					yaml = { "yamlfmt" },
+					json = { "jq" },
 				},
 				format_on_save = {
 					-- These options will be passed to conform.format()
@@ -275,11 +319,14 @@ require("lazy").setup({
 		opts = {
 			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 			-- log_level = 'debug',
+			cwd_change_handling = true,
 			post_cwd_changed_cmds = {
 				function()
 					require("lualine").refresh() -- example refreshing the lualine status line _after_ the cwd changes
 				end,
 			},
+			git_use_branch_name = true,
+			git_auto_restore_on_branch_change = true,
 		},
 	},
 
