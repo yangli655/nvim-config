@@ -293,7 +293,13 @@ require("lazy").setup({
 			require("conform").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
-					python = { "black" },
+					python = function(bufnr)
+						if require("conform").get_formatter_info("ruff_format", bufnr).available then
+							return { "ruff_format" }
+						else
+							return { "isort", "black" }
+						end
+					end,
 					bash = { "shfmt" },
 					c = { "clang-format" },
 					cpp = { "clang-format" },
