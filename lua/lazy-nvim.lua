@@ -96,6 +96,13 @@ require("lazy").setup({
 	"lewis6991/gitsigns.nvim",
 
 	{
+		"m4xshen/hardtime.nvim",
+		lazy = false,
+		dependencies = { "MunifTanjim/nui.nvim" },
+		opts = {},
+	},
+
+	{
 		"nvim-treesitter/nvim-treesitter",
 		branch = "master",
 		lazy = false,
