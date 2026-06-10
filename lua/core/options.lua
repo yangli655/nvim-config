@@ -46,7 +46,7 @@ opt.autoread = true
 opt.wrap = false
 
 -- 鼠标支持
-opt.mouse:append("a")
+opt.mouse = "a"
 
 -- 禁止创建备份文件
 opt.backup = false
@@ -85,7 +85,7 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 
 -- 自动补全不自动选中
-vim.g.completeopt = "menu,menuone,noselect,noinsert"
+vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
 
 -- For a better experience with the plugin overall using this config for sessionoptions is recommended
 opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
