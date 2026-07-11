@@ -80,15 +80,3 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		keymap("n", "gI", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to Implementation" }))
 	end,
 })
-
--- LSP 自动检测并启用折叠
-vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("LSPFolding", { clear = true }),
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if client and client:supports_method("textDocument/foldingRange") then
-			vim.opt_local.foldmethod = "expr"
-			vim.opt_local.foldexpr = "v:lua.vim.lsp.foldexpr()"
-		end
-	end,
-})

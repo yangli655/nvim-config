@@ -36,9 +36,6 @@ keymap("n", "tj", ":tabnext<cr>", opts)
 keymap("n", "tk", ":tabprev<cr>", opts)
 keymap("n", "tc", ":tabclose<cr>", opts)
 
--- Nvim Tree --
-keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
-
 -- BufferLine --
 -- bufferline pick --
 -- bufferline --

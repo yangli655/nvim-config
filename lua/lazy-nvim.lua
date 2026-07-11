@@ -50,6 +50,23 @@ require("lazy").setup({
 				},
 			},
 			terminal = { enabled = true },
+			session = {
+				enabled = true,
+				autosave = {
+					enabled = true,
+					-- 不自动保存的目录
+					pattern = {
+						[vim.fn.expand("$HOME")] = false,
+						[vim.fn.expand("$HOME") .. "/Projects"] = false,
+						[vim.fn.expand("$HOME") .. "/Downloads"] = false,
+						["/"] = false,
+					},
+				},
+				-- 只在 git 仓库中自动保存
+				should_save = function()
+					return vim.fn.isdirectory(".git") == 1
+				end,
+			},
 			words = { enabled = true },
 			bigfile = { enabled = true },
 			scroll = {
@@ -90,7 +107,7 @@ require("lazy").setup({
 			quickfile = { enabled = false },
 			scope = { enabled = false },
 			statuscolumn = { enabled = false },
-			toggle = { enabled = false },
+			toggle = { enabled = true },
 		},
 		keys = {
 			{
@@ -152,6 +169,29 @@ require("lazy").setup({
 
 	-- uilts setting --
 	"lewis6991/gitsigns.nvim",
+
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			preset = "modern",
+			icons = {
+				mappings = true,
+				breadcrumbs = ">",
+				separator = "➜",
+				group = "+",
+			},
+		},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+	},
 
 	{
 		"m4xshen/hardtime.nvim",
@@ -346,26 +386,6 @@ require("lazy").setup({
 		end,
 	},
 
-	{
-		"rmagatti/auto-session",
-		lazy = false,
-
-		---enables autocomplete for opts
-		---@module "auto-session"
-		---@type AutoSession.Config
-		opts = {
-			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-			-- log_level = 'debug',
-			cwd_change_handling = true,
-			post_cwd_changed_cmds = {
-				function()
-					require("lualine").refresh() -- example refreshing the lualine status line _after_ the cwd changes
-				end,
-			},
-			git_use_branch_name = true,
-			git_auto_restore_on_branch_change = true,
-		},
-	},
 
 	rocks = {
 		enabled = false,
