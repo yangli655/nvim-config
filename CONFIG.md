@@ -139,11 +139,11 @@ vim.diagnostic.config({
 #### lualine.nvim
 - **仓库**: `nvim-lualine/lualine.nvim`
 - **功能**: 状态栏
-- **配置**: 使用自定义 eviline 配置 (`lua/ui/lualine.lua`)
+- **配置**: 使用 tokyonight 主题，简洁配置
 
 **显示内容**:
-- 左侧: 模式图标 | 文件大小 | 文件名 | 位置 | 进度 | 诊断
-- 右侧: 编码 | 文件格式 | Git 分支 | Diff | LSP 状态
+- 左侧: 模式 | 分支 | 差异 | 诊断 | 文件名
+- 右侧: 编码 | 文件格式 | 文件类型 | LSP 服务器 | 进度 | 位置
 
 ---
 
