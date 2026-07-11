@@ -51,3 +51,8 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
+
+-- Floating Terminal (snacks.nvim)
+vim.keymap.set({ "n", "t" }, "<c-\\>", function()
+	Snacks.terminal.toggle(nil, { cwd = vim.fn.getcwd() })
+end, { desc = "Toggle Floating Terminal" })

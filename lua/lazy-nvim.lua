@@ -26,36 +26,94 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
 	-- -- UI setting --
 	{
-		"goolord/alpha-nvim",
-		dependencies = {
-			"echasnovski/mini.icons",
-			"nvim-lua/plenary.nvim",
-		},
-		config = function()
-			require("alpha").setup(require("alpha.themes.theta").config)
-		end,
-	},
-
-	{
-		"projekt0n/github-nvim-theme",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
-		config = function()
-			require("github-theme").setup({
-				-- ...
-			})
-
-			vim.cmd("colorscheme github_dark_colorblind")
-		end,
-	},
-
-	{
-		"nvim-tree/nvim-tree.lua",
-		version = "*",
+		"folke/snacks.nvim",
+		priority = 1000,
 		lazy = false,
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
+		opts = {
+			-- 启用的功能
+			dashboard = {
+				enabled = true,
+				preset = {
+					pick = function()
+						return require("telescope.builtin").find_files()
+					end,
+					keys = {
+						{ icon = " ", key = "f", desc = "Find File", action = ":Telescope find_files" },
+						{ icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+						{ icon = " ", key = "g", desc = "Find Text", action = ":Telescope live_grep" },
+						{ icon = " ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
+						{ icon = " ", key = "c", desc = "Config", action = ":e $MYVIMRC" },
+						{ icon = " ", key = "s", desc = "Restore Session", section = "session" },
+						{ icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+						{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
+					},
+				},
+			},
+			terminal = { enabled = true },
+			words = { enabled = true },
+			bigfile = { enabled = true },
+			scroll = {
+				enabled = true,
+				animate = {
+					duration = { step = 15, total = 250 },
+					easing = "outQuad",
+				},
+			},
+			explorer = {
+				enabled = true,
+				-- 兼容 nvim-tree 的快捷键
+				keys = {
+					{ "<CR>", action = "edit" },
+					{ "<C-v>", action = "vsplit" },
+					{ "<C-x>", action = "split" },
+					{ "a", action = "create" },
+					{ "d", action = "delete" },
+					{ "r", action = "rename" },
+					{ "c", action = "copy" },
+					{ "x", action = "cut" },
+					{ "p", action = "paste" },
+					{ "y", action = "copy_name" },
+					{ "Y", action = "copy_path" },
+					{ "gy", action = "copy_absolute_path" },
+					{ ".", action = "toggle_hidden" },
+					{ "<C-]>", action = "cd" },
+					{ "<BS>", action = "cd_up" },
+				},
+			},
+
+			-- 明确禁用不需要的功能
+			image = { enabled = false },
+			input = { enabled = false },
+			lazygit = { enabled = false },
+			notifier = { enabled = false },
+			picker = { enabled = false },
+			quickfile = { enabled = false },
+			scope = { enabled = false },
+			statuscolumn = { enabled = false },
+			toggle = { enabled = false },
 		},
+		keys = {
+			{
+				"<leader>;",
+				function() Snacks.dashboard() end,
+				desc = "Dashboard",
+			},
+			{
+				"<leader>e",
+				function() Snacks.explorer() end,
+				desc = "File Explorer",
+			},
+		},
+	},
+
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
+		config = function()
+			vim.cmd("colorscheme tokyonight-night")
+		end,
 	},
 
 	{
@@ -104,7 +162,7 @@ require("lazy").setup({
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		branch = "master",
+		branch = "main",
 		lazy = false,
 		build = ":TSUpdate",
 	},
@@ -119,60 +177,14 @@ require("lazy").setup({
 	},
 
 	{
-		"saghen/blink.pairs",
-		version = "*", -- (recommended) only required with prebuilt binaries
-
-		-- download prebuilt binaries from github releases
-		dependencies = "saghen/blink.download",
-		-- OR build from source, requires nightly:
-		-- https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-		-- build = 'cargo build --release',
-		-- If you use nix, you can build from source using latest nightly rust with:
-		-- build = 'nix run .#build-plugin',
-
-		--- @module 'blink.pairs'
-		--- @type blink.pairs.Config
-		opts = {
-			mappings = {
-				-- you can call require("blink.pairs.mappings").enable()
-				-- and require("blink.pairs.mappings").disable()
-				-- to enable/disable mappings at runtime
-				enabled = true,
-				cmdline = true,
-				-- or disable with `vim.g.pairs = false` (global) and `vim.b.pairs = false` (per-buffer)
-				-- and/or with `vim.g.blink_pairs = false` and `vim.b.blink_pairs = false`
-				disabled_filetypes = {},
-				-- see the defaults:
-				-- https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L14
-				pairs = {},
-			},
-			highlights = {
-				enabled = true,
-				-- requires require('vim._extui').enable({}), otherwise has no effect
-				cmdline = true,
-				groups = {
-					"BlinkPairsOrange",
-					"BlinkPairsPurple",
-					"BlinkPairsBlue",
-				},
-				unmatched_group = "BlinkPairsUnmatched",
-
-				-- highlights matching pairs under the cursor
-				matchparen = {
-					enabled = true,
-					-- known issue where typing won't update matchparen highlight, disabled by default
-					cmdline = false,
-					-- also include pairs not on top of the cursor, but surrounding the cursor
-					include_surrounding = false,
-					group = "BlinkPairsMatchParen",
-					priority = 250,
-				},
-			},
-			debug = false,
-		},
+		"echasnovski/mini.pairs",
+		version = "*",
+		lazy = false,
+		opts = {},
 	},
 	{
 		"saghen/blink.indent",
+		version = "*",
 		--- @module 'blink.indent'
 		--- @type blink.indent.Config
 		opts = {
@@ -229,13 +241,25 @@ require("lazy").setup({
 	"neovim/nvim-lspconfig",
 
 	{
-		"nvimdev/lspsaga.nvim",
-		config = function()
-			require("lspsaga").setup({})
-		end,
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter", -- optional
-			"nvim-tree/nvim-web-devicons", -- optional
+		"folke/trouble.nvim",
+		opts = {},
+		cmd = "Trouble",
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=local<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle<cr>",
+				desc = "Symbols (Trouble)",
+			},
 		},
 	},
 

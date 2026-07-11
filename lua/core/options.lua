@@ -25,14 +25,13 @@ opt.expandtab = true
 
 -- 新行对齐当前行
 opt.autoindent = true
-opt.smartindent = true
 
 -- 搜索大小写不敏感，除非包含大写
 opt.ignorecase = true
 opt.smartcase = true
 
 -- 搜索不要高亮
-opt.hlsearch = true
+opt.hlsearch = false
 -- 边输入边搜索
 opt.incsearch = true
 
@@ -90,23 +89,8 @@ vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
 -- For a better experience with the plugin overall using this config for sessionoptions is recommended
 opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
+-- 折叠配置：使用 LSP 折叠（当 LSP 不可用时回退到 treesitter）
 opt.foldmethod = "expr"
-opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-
+opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
 opt.foldenable = false
 opt.foldlevel = 99
-
--- LSP 自动检测并启用折叠
-vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("LSPFolding", { clear = true }),
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		local bufnr = args.buf
-
-		-- 检查 LSP 服务器是否支持折叠
-		if client and client:supports_method("textDocument/foldingRange") then
-			opt.foldmethod = "expr"
-			opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
-		end
-	end,
-})

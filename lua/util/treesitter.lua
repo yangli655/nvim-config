@@ -1,38 +1,37 @@
-require("nvim-treesitter.configs").setup({
-	-- A list of parser names, or "all" (the five listed parsers should always be installed)
-	ensure_installed = { "c", "cpp", "python", "yaml", "json", "lua", "rust", "markdown", "markdown_inline" },
+-- nvim-treesitter main branch 新 API
+-- 参考: https://github.com/nvim-treesitter/nvim-treesitter (main branch)
 
-	-- Install parsers synchronously (only applied to `ensure_installed`)
-	sync_install = false,
+-- 最小化 setup，只需指定安装目录（默认即可）
+require("nvim-treesitter").setup({
+	install_dir = vim.fn.stdpath("data") .. "/site",
+})
 
-	-- Automatically install missing parsers when entering buffer
-	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-	auto_install = true,
+-- 确保安装所需的 parser
+local parsers = {
+	"c",
+	"cpp",
+	"python",
+	"yaml",
+	"json",
+	"lua",
+	"rust",
+	"markdown",
+	"markdown_inline",
+}
 
-	-- List of parsers to ignore installing (for "all")
-	ignore_install = { "javascript" },
+-- 异步安装（如果已安装则跳过）
+require("nvim-treesitter").install(parsers)
 
-	---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-	-- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-	highlight = {
-		enable = true,
-		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-		-- Using this option may slow down your editor, and you may see some duplicate highlights.
-		-- Instead of true it can also be a list of languages
-		additional_vim_regex_highlighting = false,
-	},
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "gnn", -- set to `false` to disable one of the mappings
-			node_incremental = "grn",
-			scope_incremental = "grc",
-			node_decremental = "grm",
-		},
-	},
-	indent = {
-		enable = true,
-	},
+-- FileType autocmd: 启用 treesitter highlight + indent
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true }),
+	callback = function()
+		-- 仅对已安装 parser 的 filetype 启用 treesitter 高亮
+		-- 使用 pcall 防止无 parser 的 filetype (如 alpha dashboard) 报错
+		local ok = pcall(vim.treesitter.start)
+		if ok then
+			-- 启用 treesitter 缩进（实验性功能）
+			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		end
+	end,
 })

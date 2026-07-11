@@ -18,7 +18,7 @@ bufferline.setup {
         end,
         offsets = {
             {
-                filetype = "NvimTree",
+                filetype = "snacks_layout_explorer",
                 text = "File Explorer",
                 text_align = "center",
                 separator = true
