@@ -9,8 +9,7 @@ if not vim.g.vscode then
 	require("util.gitsigns")
 
 	require("lsp.mason")
-	require("lsp.keymaps")
-	require("lsp.lsp")
+	require("lsp.lspsaga")
 
 	require("core.options")
 	require("core.keymaps")

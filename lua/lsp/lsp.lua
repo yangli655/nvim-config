@@ -1,3 +1,0 @@
--- LSP servers are now automatically enabled by mason-lspconfig (automatic_enable = true)
--- To disable a specific server, use vim.lsp.disable("server_name")
--- vim.lsp.disable("bashls")

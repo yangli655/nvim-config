@@ -273,9 +273,44 @@ vim.diagnostic.config({
 
 ---
 
-#### trouble.nvim
-- **仓库**: `folke/trouble.nvim`
-- **功能**: 诊断/符号列表
+#### lspsaga.nvim
+- **仓库**: `nvimdev/lspsaga.nvim`
+- **功能**: LSP UI 增强
+
+**功能模块**:
+- Finder - 符号查找（definition/references/implementation）
+- Rename - 重命名
+- Hover - 文档悬浮窗
+- Diagnostic - 诊断显示和跳转
+- Code Action - 代码操作
+- Outline - 符号大纲
+- Call Hierarchy - 调用层次
+- Lightbulb - 代码操作提示
+- Beacon - 跳转高亮
+- Symbol in Winbar - 面包屑导航
+- Float Terminal - 浮动终端
+
+**快捷键**:
+
+| 按键 | 功能 |
+|-----|------|
+| `gh` | Finder（符号查找） |
+| `gp` | 预览定义 |
+| `gd` | 跳转定义 |
+| `gt` | 跳转类型定义 |
+| `gr` | 重命名 |
+| `K` | 悬停文档 |
+| `<leader>ca` | 代码操作 |
+| `<leader>o` | 大纲 |
+| `<leader>ci` | 入向调用 |
+| `<leader>co` | 出向调用 |
+| `[e` / `]e` | 诊断跳转 |
+| `[E` / `]E` | 错误跳转 |
+| `<leader>sl` | 显示行诊断 |
+| `<leader>sb` | 显示 buffer 诊断 |
+| `<leader>sw` | 显示工作区诊断 |
+| `<leader>sc` | 显示光标诊断 |
+| `<C-\>` | 浮动终端 |
 
 ---
 
@@ -520,8 +555,7 @@ vim.diagnostic.config({
 │   │   ├── telescope.lua       # Telescope 配置
 │   │   └── treesitter.lua      # Treesitter 配置
 │   ├── lsp/
-│   │   ├── keymaps.lua         # LSP 快捷键
-│   │   ├── lsp.lua             # LSP 配置
+│   │   ├── lspsaga.lua         # Lspsaga 快捷键
 │   │   └── mason.lua           # Mason 配置
 │   └── lazy-nvim.lua           # Lazy.nvim 插件配置
 ```
@@ -544,7 +578,7 @@ LSP 生态
 ├── mason-lspconfig     (LSP 自动配置)
 ├── nvim-lspconfig      (LSP 配置)
 ├── blink.cmp           (代码补全)
-├── trouble.nvim        (诊断列表)
+├── lspsaga.nvim        (LSP UI 增强)
 └── conform.nvim        (代码格式化)
 
 编辑增强
@@ -562,7 +596,7 @@ Git
 └── gitsigns.nvim       (Git 状态)
 
 会话
-└── auto-session        (自动会话)
+└── snacks.session      (自动会话)
 
 UI
 ├── tokyonight.nvim     (主题)
@@ -581,6 +615,5 @@ UI
 | `:Lazy update` | 更新插件 |
 | `:Lazy clean` | 清理未使用的插件 |
 | `:Mason` | 打开 LSP 服务器管理 |
-| `:Trouble` | 打开诊断列表 |
 | `:TSInstall {lang}` | 安装 Treesitter parser |
 | `:TSUpdate` | 更新 Treesitter parser |

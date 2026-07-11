@@ -43,7 +43,7 @@ require("lazy").setup({
 						{ icon = " ", key = "g", desc = "Find Text", action = ":Telescope live_grep" },
 						{ icon = " ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
 						{ icon = " ", key = "c", desc = "Config", action = ":e $MYVIMRC" },
-						{ icon = " ", key = "s", desc = "Restore Session", section = "session" },
+						{ icon = " ", key = "s", desc = "Restore Session", action = function() Snacks.session.restore() end },
 						{ icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
 						{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
 					},
@@ -64,7 +64,8 @@ require("lazy").setup({
 				},
 				-- 只在 git 仓库中自动保存
 				should_save = function()
-					return vim.fn.isdirectory(".git") == 1
+					local git_dir = vim.fn.finddir(".git", vim.fn.expand("%:p:h") .. ";")
+					return git_dir ~= ""
 				end,
 			},
 			words = { enabled = true },
@@ -224,7 +225,7 @@ require("lazy").setup({
 	},
 	{
 		"saghen/blink.indent",
-		version = "*",
+		version = "1.*",
 		--- @module 'blink.indent'
 		--- @type blink.indent.Config
 		opts = {
@@ -281,25 +282,28 @@ require("lazy").setup({
 	"neovim/nvim-lspconfig",
 
 	{
-		"folke/trouble.nvim",
-		opts = {},
-		cmd = "Trouble",
-		keys = {
-			{
-				"<leader>xx",
-				"<cmd>Trouble diagnostics toggle<cr>",
-				desc = "Diagnostics (Trouble)",
-			},
-			{
-				"<leader>xX",
-				"<cmd>Trouble diagnostics toggle filter.buf=local<cr>",
-				desc = "Buffer Diagnostics (Trouble)",
-			},
-			{
-				"<leader>cs",
-				"<cmd>Trouble symbols toggle<cr>",
-				desc = "Symbols (Trouble)",
-			},
+		"nvimdev/lspsaga.nvim",
+		config = function()
+			require("lspsaga").setup({
+				-- Lightbulb - 代码操作提示
+				lightbulb = {
+					enable = true,
+					sign = true,
+					virtual_text = false,
+				},
+				-- Symbol in Winbar - 面包屑导航
+				symbol_in_winbar = {
+					enable = true,
+				},
+				-- Beacon - 跳转高亮
+				beacon = {
+					enable = true,
+				},
+			})
+		end,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter", -- optional
+			"nvim-tree/nvim-web-devicons", -- optional
 		},
 	},
 
