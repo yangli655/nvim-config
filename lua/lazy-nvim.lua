@@ -100,11 +100,8 @@ require("lazy").setup({
 			},
 
 			-- 明确禁用不需要的功能
-			image = { enabled = false },
 			input = { enabled = false },
 			lazygit = { enabled = false },
-			notifier = { enabled = false },
-			picker = { enabled = false },
 			quickfile = { enabled = false },
 			scope = { enabled = false },
 			statuscolumn = { enabled = false },

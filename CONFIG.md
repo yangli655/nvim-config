@@ -91,8 +91,12 @@ vim.diagnostic.config({
 | `bigfile` | 大文件优化 |
 | `scroll` | 平滑滚动动画 |
 | `explorer` | 文件浏览器 |
+| `image` | 内联图片显示 |
+| `notifier` | 通知提示 |
+| `picker` | 模糊选择器 |
+| `toggle` | 功能切换 |
 
-**禁用的功能**: image, input, lazygit, notifier, picker, quickfile, scope, statuscolumn, toggle
+**禁用的功能**: input, lazygit, quickfile, scope, statuscolumn
 
 **Dashboard 快捷键**:
 
