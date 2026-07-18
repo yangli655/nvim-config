@@ -5,7 +5,6 @@ if not vim.g.vscode then
 	require("ui.bufferline")
 
 	require("util.telescope")
-	require("util.treesitter")
 	require("util.gitsigns")
 
 	require("lsp.mason")

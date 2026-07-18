@@ -31,7 +31,7 @@
 | 键 | 用途 |
 |----|------|
 | `<Space>` | 全局 Leader 键 |
-| `\` | 本地 Leader 键 |
+| `\` | 本地 Leader 键（在 lazy-nvim.lua 中设置） |
 
 ---
 
@@ -189,11 +189,12 @@ vim.diagnostic.config({
 
 ---
 
-#### nvim-treesitter
-- **仓库**: `nvim-treesitter/nvim-treesitter` (main 分支)
-- **功能**: 语法高亮、折叠、缩进
+#### nvim-treesitter（已移除）
+- **状态**: 仓库已于 2026-04-03 归档
+- **替代方案**: 使用 Neovim 0.12+ 内置 treesitter API
+- **Parser 安装命令**: `:TS install`（旧命令 `:TSInstall` 已废弃）
 
-**安装的 Parser**:
+**已安装的 Parser**:
 - c, cpp, python, yaml, json, lua, rust, markdown, markdown_inline
 
 ---
