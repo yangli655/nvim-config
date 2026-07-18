@@ -10,7 +10,6 @@ if not vim.g.vscode then
 	require("ui.bufferline")
 
 	-- 工具插件
-	require("util.telescope")
 	require("util.gitsigns")
 
 	-- LSP

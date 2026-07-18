@@ -178,14 +178,15 @@ vim.diagnostic.config({
 
 ### 3.2 工具插件
 
-#### telescope.nvim
-- **仓库**: `nvim-telescope/telescope.nvim`
-- **依赖**: `plenary.nvim`, `telescope-fzf-native.nvim`
-- **功能**: 模糊搜索
+#### snacks.picker（替代 telescope.nvim）
+- **来源**: `folke/snacks.nvim` 内置模块
+- **功能**: 模糊搜索（文件、文本、buffer、帮助等）
+- **优势**: 与 snacks 生态集成，Rust 后端，性能优于 telescope
 
-**配置**:
-- 启用 fzf 原生排序
-- 智能大小写匹配
+**已移除的插件**:
+- `nvim-telescope/telescope.nvim`
+- `nvim-lua/plenary.nvim`
+- `nvim-telescope/telescope-fzf-native.nvim`
 
 ---
 
@@ -410,7 +411,7 @@ vim.diagnostic.config({
 
 ---
 
-### 4.2 Telescope 快捷键
+### 4.2 Snacks Picker 快捷键
 
 | 按键 | 功能 |
 |-----|------|
@@ -594,8 +595,7 @@ LSP 生态
 └── hardtime.nvim       (防止低效按键)
 
 搜索 & 导航
-├── telescope.nvim      (模糊搜索)
-└── telescope-fzf-native (fzf 排序)
+└── snacks.picker       (模糊搜索，内置于 snacks.nvim)
 
 Git
 └── gitsigns.nvim       (Git 状态)
