@@ -1,9 +1,5 @@
 local opt = vim.opt
 
--- utf8
-opt.encoding = "UTF-8"
-opt.fileencoding = "utf-8"
-
 -- 设置光标所在的行号 相对行号
 opt.number = true
 opt.relativenumber = true
@@ -59,9 +55,6 @@ opt.splitright = true
 -- 样式
 opt.termguicolors = true
 
--- 补全增强
-opt.wildmenu = true
-
 -- 补全最多显示10行
 opt.pumheight = 10
 
@@ -94,3 +87,17 @@ opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
 opt.foldenable = false
 opt.foldlevel = 99
+
+-- 持久化 undo：关闭文件后仍能撤销
+opt.undofile = true
+opt.undodir = vim.fn.stdpath("data") .. "/undo"
+
+-- 光标位置恢复：打开文件时跳转到上次编辑位置
+vim.api.nvim_create_autocmd("BufReadPost", {
+	callback = function()
+		local mark = vim.api.nvim_buf_get_mark(0, '"')
+		if mark[1] > 0 and mark[1] <= vim.api.nvim_buf_line_count(0) then
+			vim.api.nvim_win_set_cursor(0, mark)
+		end
+	end,
+})
