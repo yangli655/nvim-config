@@ -79,14 +79,61 @@ vim.g.loaded_perl_provider = 0
 -- 自动补全不自动选中
 vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
 
--- For a better experience with the plugin overall using this config for sessionoptions is recommended
+-- persistence.nvim 存会话用的就是原生 :mksession，存什么由 'sessionoptions' 决定。
+-- 在默认值之外补了 winpos（窗口位置）和 localoptions（窗口/缓冲区局部选项与映射，
+-- 不含局部选项的全局值）；folds 本身已经会带上局部 fold 选项。
 opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
--- 折叠配置：使用 LSP 折叠（当 LSP 不可用时回退到 treesitter）
+-- 折叠配置：优先 LSP 折叠；当前 buffer 没有支持 foldingRange 的 LSP 时
+-- 回退到 treesitter。直接用 vim.lsp.foldexpr() 会在无 LSP 时返回 "0"，
+-- 并不会自动使用 treesitter，所以需要自己包一层判断。
 opt.foldmethod = "expr"
-opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
-opt.foldenable = false
 opt.foldlevel = 99
+opt.foldenable = false
+
+_G.nvim_foldexpr = function()
+	if vim.b.fold_lsp_ready then
+		return vim.lsp.foldexpr()
+	end
+	local ok, ts = pcall(vim.treesitter.foldexpr)
+	if ok then
+		return ts
+	end
+	return "0"
+end
+opt.foldexpr = "v:lua.nvim_foldexpr()"
+
+local lsp_fold_group = vim.api.nvim_create_augroup("LspFoldDetect", { clear = true })
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = lsp_fold_group,
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if client and client:supports_method("textDocument/foldingRange") then
+			vim.b[ev.buf].fold_lsp_ready = true
+		end
+	end,
+})
+-- LSP 退出/崩溃后要退回 treesitter，否则 foldexpr 会一直拿到 LSP 的 "0"。
+-- LspDetach 触发时 get_clients() 还能看到正在退出的 client，必须 schedule 到下一拍
+-- 并排除 ev.data.client_id，否则 lua_ls 停掉后 fold_lsp_ready 会一直卡在 true。
+vim.api.nvim_create_autocmd("LspDetach", {
+	group = lsp_fold_group,
+	callback = function(ev)
+		vim.schedule(function()
+			if not vim.api.nvim_buf_is_valid(ev.buf) then
+				return
+			end
+			local has_fold_client = false
+			for _, client in ipairs(vim.lsp.get_clients({ bufnr = ev.buf })) do
+				if client.id ~= ev.data.client_id and client:supports_method("textDocument/foldingRange") then
+					has_fold_client = true
+					break
+				end
+			end
+			vim.b[ev.buf].fold_lsp_ready = has_fold_client or nil
+		end)
+	end,
+})
 
 -- 持久化 undo：关闭文件后仍能撤销
 opt.undofile = true

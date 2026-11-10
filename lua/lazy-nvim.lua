@@ -43,31 +43,19 @@ require("lazy").setup({
 						{ icon = " ", key = "g", desc = "Find Text", action = function() Snacks.picker.grep() end },
 						{ icon = " ", key = "r", desc = "Recent Files", action = function() Snacks.picker.recent() end },
 						{ icon = " ", key = "c", desc = "Config", action = ":e $MYVIMRC" },
-						{ icon = " ", key = "s", desc = "Restore Session", action = function() Snacks.session.restore() end },
+						{ icon = " ", key = "s", desc = "Restore Session", section = "session" },
 						{ icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
 						{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
 					},
 				},
 			},
 			terminal = { enabled = true },
-			session = {
-				enabled = true,
-				autosave = {
-					enabled = true,
-					-- 不自动保存的目录
-					pattern = {
-						[vim.fn.expand("$HOME")] = false,
-						[vim.fn.expand("$HOME") .. "/Projects"] = false,
-						[vim.fn.expand("$HOME") .. "/Downloads"] = false,
-						["/"] = false,
-					},
-				},
-				-- 只在 git 仓库中自动保存
-				should_save = function()
-					local git_dir = vim.fn.finddir(".git", vim.fn.expand("%:p:h") .. ";")
-					return git_dir ~= ""
-				end,
-			},
+			-- 会话管理不再由 snacks 提供：2.31.0 起 session 模块已被删除
+			-- （仓库里没有 lua/snacks/session.lua），原来这里的
+			-- autosave/should_save 整块是无人消费的死配置，而 dashboard 的 s 键
+			-- 调用 Snacks.session.restore() 会直接抛 E5108。
+			-- 现在改由下面的 folke/persistence.nvim 负责，dashboard 用
+			-- section = "session" 让 snacks 自己接上 require('persistence').load()。
 			words = { enabled = true },
 			bigfile = { enabled = true },
 			scroll = {
@@ -122,6 +110,65 @@ require("lazy").setup({
 	},
 
 	{
+		-- 会话持久化。snacks.nvim 从 2.31.0 起删掉了自带的 session 模块，
+		-- dashboard 里那行 section = "session" 会去探测外部会话插件并自动接上
+		-- 对应的恢复命令，persistence.nvim 在探测列表的第一位
+		-- （snacks/dashboard.lua:831）。
+		--
+		-- 这里用 lazy = false，而不是 README 建议的 event = "BufReadPre"：
+		-- dashboard 是 scratch buffer，不触发 BufReadPre，而恢复动作是一句裸的
+		-- require('persistence')；插件还没被 lazy 装进 rtp 时会直接找不到模块。
+		"folke/persistence.nvim",
+		lazy = false,
+		config = function()
+			local persistence = require("persistence")
+			persistence.setup({
+				dir = vim.fn.stdpath("state") .. "/sessions/",
+				need = 0,
+				branch = true, -- git 仓库里按分支分开保存
+			})
+			-- setup 里的 start() 只认 need 这一条，把它的 VimLeavePre 撤掉，
+			-- 自动保存规则全部由下面自己接管（stop 只删 augroup "persistence"，
+			-- 不影响稍后手动调 save()）
+			persistence.stop()
+
+			-- persistence 3.x 的 defaults 只剩 dir/need/branch，原来 snacks.session
+			-- 的两条规则（只在 git 仓库自动存、少数目录不存）已经没有对应选项，
+			-- 这里改成退出前按 cwd 判断一次。
+			-- 挂在 VimLeavePre 而不是启动时的 VimEnter：VimEnter 在 headless 下不触发、
+			-- 测不到，而退出时再判断还能保住原来 should_save 那种动态语义。
+			-- finddir(".git", cwd .. ";") 会从 cwd 向上查找，实测在仓库子目录里
+			-- 也能命中；不带 ";" 时返回空，所以这个写法不能省。
+			-- 目录名两边都要归一化：':p' 只在目标确实是已存在的目录时才补尾部的
+			-- "/"，所以拿 getcwd() .. "/" 去查这张表刚好能对上——目录不存在时它
+			-- 不可能成为 cwd，等它被建出来，下次启动的 setup 也会重新展开出带
+			-- 斜杠的 key。
+			local skip = {}
+			for _, d in ipairs({ "$HOME", "$HOME/Projects", "$HOME/Downloads", "/" }) do
+				skip[vim.fn.fnamemodify(vim.fn.expand(d), ":p")] = true
+			end
+			vim.api.nvim_create_autocmd("VimLeavePre", {
+				group = vim.api.nvim_create_augroup("session.autosave", { clear = true }),
+				callback = function()
+					local cwd = vim.fn.getcwd() .. "/"
+					if skip[cwd] or vim.fn.finddir(".git", cwd .. ";") == "" then
+						return
+					end
+					local files = 0
+					for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+						if vim.bo[buf].buftype == "" and vim.api.nvim_buf_get_name(buf) ~= "" then
+							files = files + 1
+						end
+					end
+					if files > 0 then
+						persistence.save()
+					end
+				end,
+			})
+		end,
+	},
+
+	{
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
@@ -166,6 +213,53 @@ require("lazy").setup({
 	},
 
 	-- uilts setting --
+
+	{
+		-- 语法高亮的 parser + queries 来源。
+		--
+		-- 提交 57866b8 以"用 Neovim 0.12 内置 treesitter"为由删掉了 nvim-treesitter，
+		-- 但内置的范围只有 c / lua / markdown(markdown_inline) / query / vim / vimdoc
+		-- 这几个语言（$VIMRUNTIME/lib/nvim/parser 下只有这几个 .so，queries 同名几个）。
+		-- python 不在其中：parser 只是当年 nvim-treesitter 编译后留在
+		-- $DATA/site/parser/python.so 的遗物，queries 随插件一起被删了，
+		-- 所以 vim.treesitter.query.get("python", "highlights") 是 nil，
+		-- 高亮只能退回 regex syntax（&syntax=python）。
+		--
+		-- 该仓库现在的主分支是针对 0.12 重写的版本，只装 parser + queries，
+		-- 高亮/折叠/缩进的开关都交给 Neovim 原生 API，需要自己接（见 README
+		-- "Supported features": These are not automatically enabled）。
+		-- 旧的 master 分支已锁定，只保证 Nvim 0.11。
+		"nvim-treesitter/nvim-treesitter",
+		-- 官方明确不支持懒加载：queries 必须在 FileType 触发前就进 rtp
+		lazy = false,
+		-- 编译 parser 依赖 tree-sitter-cli（README 要求 0.26+，本机 0.27.1）和 C 编译器；
+		-- TSUpdate 只更新已经装过的 parser，首次安装靠下面 config 里的 install()
+		build = ":TSUpdate",
+		config = function()
+			-- 幂等：已安装则直接返回，不会重复编译
+			require("nvim-treesitter").install({ "python" })
+
+			local group = vim.api.nvim_create_augroup("TreeSitterHighlight", { clear = true })
+			vim.api.nvim_create_autocmd("FileType", {
+				group = group,
+				pattern = "python",
+				desc = "为 python 启用 Neovim 内置的 treesitter 高亮",
+				callback = function(ev)
+					local lang = vim.treesitter.language.get_lang(vim.bo[ev.buf].filetype)
+					-- 这个判断不能省：highlights 查询不存在时 vim.treesitter.start()
+					-- 不报错，但会把 &syntax 清空 —— 结果是 regex 高亮被关掉、
+					-- treesitter 又没有捕获规则，整个文件一点颜色都没有（实测）。
+					-- 缺查询时宁可留在 regex syntax 上。
+					if not lang or not vim.treesitter.query.get(lang, "highlights") then
+						return
+					end
+					-- parser 还没编译完时 get_parser 会报错，pcall 兜住继续用 regex
+					pcall(vim.treesitter.start, ev.buf, lang)
+				end,
+			})
+		end,
+	},
+
 	"lewis6991/gitsigns.nvim",
 
 	{
