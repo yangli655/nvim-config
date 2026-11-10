@@ -35,13 +35,13 @@ require("lazy").setup({
 				enabled = true,
 				preset = {
 					pick = function()
-						return require("telescope.builtin").find_files()
+						return Snacks.picker.files()
 					end,
 					keys = {
-						{ icon = " ", key = "f", desc = "Find File", action = ":Telescope find_files" },
+						{ icon = " ", key = "f", desc = "Find File", action = function() Snacks.picker.files() end },
 						{ icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-						{ icon = " ", key = "g", desc = "Find Text", action = ":Telescope live_grep" },
-						{ icon = " ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
+						{ icon = " ", key = "g", desc = "Find Text", action = function() Snacks.picker.grep() end },
+						{ icon = " ", key = "r", desc = "Recent Files", action = function() Snacks.picker.recent() end },
 						{ icon = " ", key = "c", desc = "Config", action = ":e $MYVIMRC" },
 						{ icon = " ", key = "s", desc = "Restore Session", action = function() Snacks.session.restore() end },
 						{ icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
@@ -369,15 +369,15 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-
+}, {
+	-- 以下是 lazy.nvim 自身的设置，必须作为 setup() 的第二个参数（opts）传入。
+	-- 之前它们写在第一个参数的 spec 列表里，会被当成插件条目静默忽略：
+	-- 实测 options.checker.enabled 仍为 false、rocks.enabled 仍为 true。
 	rocks = {
 		enabled = false,
-		-- hererocks = false,
 	},
-	-- Configure any other settings here. See the documentation for more details.
-	-- colorscheme that will be used when installing plugins.
+	-- 安装插件时使用的兜底 colorscheme
 	install = { colorscheme = { "habamax" } },
-	-- automatically check for plugin updates
+	-- 自动检查插件更新
 	checker = { enabled = true },
 })

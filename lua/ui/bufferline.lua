@@ -16,9 +16,11 @@ bufferline.setup {
             local icon = level:match("error") and "" or ""
             return " " .. icon .. count
         end,
+        -- Snacks.explorer() 的常驻左侧分屏容器 filetype 是 snacks_layout_box，
+        -- 而 snacks_picker_list/input 只是浮在它上面的窗口，不会参与 tabline 偏移。
         offsets = {
             {
-                filetype = "snacks_layout_explorer",
+                filetype = "snacks_layout_box",
                 text = "File Explorer",
                 text_align = "center",
                 separator = true
