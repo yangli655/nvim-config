@@ -169,29 +169,6 @@ require("lazy").setup({
 	"lewis6991/gitsigns.nvim",
 
 	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		opts = {
-			preset = "modern",
-			icons = {
-				mappings = true,
-				breadcrumbs = ">",
-				separator = "➜",
-				group = "+",
-			},
-		},
-		keys = {
-			{
-				"<leader>?",
-				function()
-					require("which-key").show({ global = false })
-				end,
-				desc = "Buffer Local Keymaps (which-key)",
-			},
-		},
-	},
-
-	{
 		"m4xshen/hardtime.nvim",
 		lazy = false,
 		dependencies = { "MunifTanjim/nui.nvim" },
@@ -199,7 +176,10 @@ require("lazy").setup({
 	},
 
 	{
-		"echasnovski/mini.pairs",
+		-- 该仓库已从 echasnovski 个人账号迁到 nvim-mini 组织，
+		-- 旧地址靠 301 重定向还能用，但 issue/PR 都在 monorepo 里进行。
+		-- tag 列表不变（最新 v0.18.0），version = "*" 解析结果与迁移前一致。
+		"nvim-mini/mini.pairs",
 		version = "*",
 		lazy = false,
 		opts = {},
