@@ -186,7 +186,9 @@ require("lazy").setup({
 	},
 	{
 		"saghen/blink.indent",
-		version = "1.*",
+		-- 原先写的是 "1.*"，把版本锁在了首发 v1.0.0，而仓库已到 v2.3.0。
+		-- 官方 README 的安装片段不带 version，这里保留 pin 仅为避免自动跳大版本。
+		version = "2.*",
 		--- @module 'blink.indent'
 		--- @type blink.indent.Config
 		opts = {
